@@ -1,0 +1,5 @@
+Olá Mundo
+Teste
+Teste
+vamos fazer a primeira aula de git
+Eu abri o arquivo com o comando "code" para abrir o visual studio
