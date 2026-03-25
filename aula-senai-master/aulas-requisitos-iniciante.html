@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Requisitos de Software — Do Zero</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fdf9f3;
+  --white: #ffffff;
+  --ink: #1a1a2e;
+  --muted: #6b7280;
+  --a1: #f97316;   /* laranja */
+  --a2: #3b82f6;   /* azul */
+  --a3: #10b981;   /* verde */
+  --a4: #8b5cf6;   /* roxo */
+  --a5: #ef4444;   /* vermelho */
+  --light1: #fff7ed;
+  --light2: #eff6ff;
+  --light3: #ecfdf5;
+  --light4: #f5f3ff;
+  --sans: 'Nunito', sans-serif;
+  --hand: 'Caveat', cursive;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ── NAV TOPO ── */
+#topnav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  background: var(--white);
+  border-bottom: 2px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 20px;
+  gap: 12px;
+}
+
+.tabs { display: flex; gap: 6px; }
+
+.tab {
+  padding: 7px 16px;
+  border-radius: 99px;
+  border: 2px solid #e5e7eb;
+  background: transparent;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--muted);
+  transition: all .2s;
+}
+.tab:hover { border-color: var(--a1); color: var(--a1); }
+.tab.on { background: var(--a1); color: white; border-color: var(--a1); }
+.tab.on.t2 { background: var(--a2); border-color: var(--a2); }
+.tab.on.t3 { background: var(--a3); border-color: var(--a3); }
+.tab.on.t4 { background: var(--a4); border-color: var(--a4); }
+
+.counter {
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--muted);
+  background: #f3f4f6;
+  border-radius: 99px;
+  padding: 5px 14px;
+}
+
+/* ── SLIDE AREA ── */
+#stage {
+  position: fixed;
+  top: 52px; bottom: 52px;
+  left: 0; right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.slide {
+  display: none;
+  position: absolute;
+  inset: 0;
+  padding: 32px 64px;
+  flex-direction: column;
+  justify-content: center;
+  overflow-y: auto;
+  animation: fadeSlide .3s ease;
+}
+.slide.on { display: flex; }
+
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── BOTTOM BAR ── */
+#bot {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: var(--white);
+  border-top: 2px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 8px;
+  z-index: 200;
+}
+
+.btn {
+  padding: 8px 22px;
+  border-radius: 99px;
+  border: 2px solid #e5e7eb;
+  background: var(--white);
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all .2s;
+  color: var(--ink);
+}
+.btn:hover:not(:disabled) { border-color: var(--a1); color: var(--a1); }
+.btn:disabled { opacity: .35; cursor: default; }
+
+#progbar {
+  flex: 1; max-width: 320px;
+  height: 6px;
+  background: #e5e7eb;
+  border-radius: 99px;
+  overflow: hidden;
+}
+#progfill {
+  height: 100%;
+  border-radius: 99px;
+  background: var(--a1);
+  transition: width .3s ease, background .3s;
+}
+
+/* ════════════════════════
+   SLIDE TYPES
+   ════════════════════════ */
+
+/* CAPA */
+.capa {
+  background: linear-gradient(135deg, #fff7ed 0%, #fdf9f3 100%);
+  position: relative;
+  overflow: hidden;
+}
+.capa::before {
+  content: '';
+  position: absolute;
+  right: -60px; top: -60px;
+  width: 380px; height: 380px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(249,115,22,.08) 0%, transparent 70%);
+}
+
+.badge-aula {
+  display: inline-block;
+  background: var(--a1);
+  color: white;
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-radius: 99px;
+  padding: 6px 16px;
+  margin-bottom: 22px;
+  width: fit-content;
+}
+.badge-aula.b2 { background: var(--a2); }
+.badge-aula.b3 { background: var(--a3); }
+.badge-aula.b4 { background: var(--a4); }
+
+.capa-titulo {
+  font-size: clamp(30px, 4.5vw, 56px);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 16px;
+  max-width: 68%;
+}
+
+.capa-titulo em { font-style: normal; color: var(--a1); }
+.capa-titulo em.e2 { color: var(--a2); }
+.capa-titulo em.e3 { color: var(--a3); }
+.capa-titulo em.e4 { color: var(--a4); }
+
+.capa-desc {
+  font-size: 17px;
+  color: var(--muted);
+  max-width: 55%;
+  line-height: 1.7;
+  margin-bottom: 32px;
+  font-weight: 600;
+}
+
+.capa-info {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.info-chip {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--white);
+  border: 2px solid #e5e7eb;
+  border-radius: 99px;
+  padding: 7px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.capa-emoji {
+  position: absolute;
+  right: 100px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 120px;
+  line-height: 1;
+  opacity: .85;
+}
+
+/* TÍTULO DE SLIDE COMUM */
+.slide-h {
+  font-size: clamp(22px, 3vw, 34px);
+  font-weight: 900;
+  margin-bottom: 6px;
+}
+
+.slide-sub {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--a1); flex-shrink: 0; }
+.dot.d2 { background: var(--a2); }
+.dot.d3 { background: var(--a3); }
+.dot.d4 { background: var(--a4); }
+
+/* GRID HELPERS */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.g3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+/* CARDS */
+.card {
+  background: var(--white);
+  border: 2px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 20px 22px;
+}
+
+.card-ico {
+  font-size: 32px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.card h3 {
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.card p {
+  font-size: 14px;
+  color: #374151;
+  line-height: 1.65;
+}
+
+/* COLOR CARD VARIANTS */
+.card.laranja { border-color: #fed7aa; background: var(--light1); }
+.card.azul    { border-color: #bfdbfe; background: var(--light2); }
+.card.verde   { border-color: #a7f3d0; background: var(--light3); }
+.card.roxo    { border-color: #ddd6fe; background: var(--light4); }
+.card.vermelho{ border-color: #fecaca; background: #fef2f2; }
+
+/* CAIXA DESTAQUE */
+.destaque {
+  border-radius: 16px;
+  padding: 18px 22px;
+  border: 2px solid;
+  margin-bottom: 0;
+}
+.destaque.laranja { background: var(--light1); border-color: #fed7aa; }
+.destaque.azul    { background: var(--light2); border-color: #bfdbfe; }
+.destaque.verde   { background: var(--light3); border-color: #a7f3d0; }
+.destaque.roxo    { background: var(--light4); border-color: #ddd6fe; }
+.destaque.vermelho{ background: #fef2f2; border-color: #fecaca; }
+
+.destaque .rotulo {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 8px;
+  color: var(--a1);
+}
+.destaque.azul  .rotulo { color: var(--a2); }
+.destaque.verde .rotulo { color: var(--a3); }
+.destaque.roxo  .rotulo { color: var(--a4); }
+.destaque.vermelho .rotulo { color: var(--a5); }
+
+.destaque p { font-size: 14px; line-height: 1.7; font-weight: 600; }
+
+/* LISTA SIMPLES */
+.lista { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+.lista li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 1.55;
+  font-weight: 600;
+}
+.lista li::before {
+  content: '👉';
+  flex-shrink: 0;
+  margin-top: 0px;
+}
+.lista.check li::before { content: '✅'; }
+.lista.x     li::before { content: '❌'; }
+.lista.star  li::before { content: '⭐'; }
+
+/* TABELA */
+.tabela { width: 100%; border-collapse: collapse; font-size: 13px; }
+.tabela th {
+  background: #f9fafb;
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 800;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: var(--muted);
+  border-bottom: 2px solid #e5e7eb;
+}
+.tabela td {
+  padding: 11px 14px;
+  border-bottom: 1px solid #f3f4f6;
+  font-weight: 600;
+  vertical-align: top;
+  line-height: 1.5;
+}
+.tabela tr:last-child td { border-bottom: none; }
+.tabela tr:hover td { background: #fafafa; }
+
+/* PÍLULAS/TAGS */
+.pill {
+  display: inline-block;
+  border-radius: 99px;
+  padding: 3px 12px;
+  font-size: 12px;
+  font-weight: 800;
+}
+.pill.verde   { background: #dcfce7; color: #166534; }
+.pill.azul    { background: #dbeafe; color: #1e40af; }
+.pill.laranja { background: #ffedd5; color: #9a3412; }
+.pill.vermelho{ background: #fee2e2; color: #991b1b; }
+
+/* HANDWRITTEN callout */
+.handwrite {
+  font-family: var(--hand);
+  font-size: 22px;
+  color: var(--a1);
+  line-height: 1.3;
+}
+.handwrite.az { color: var(--a2); }
+.handwrite.vd { color: var(--a3); }
+.handwrite.rx { color: var(--a4); }
+
+/* EXERCÍCIO */
+.ex-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--a1);
+  color: white;
+  font-weight: 800;
+  font-size: 13px;
+  border-radius: 99px;
+  padding: 7px 18px;
+  margin-bottom: 16px;
+}
+.ex-badge.b2 { background: var(--a2); }
+.ex-badge.b3 { background: var(--a3); }
+.ex-badge.b4 { background: var(--a4); }
+
+.cenario {
+  background: var(--white);
+  border: 2px solid #e5e7eb;
+  border-left: 5px solid var(--a1);
+  border-radius: 0 14px 14px 0;
+  padding: 16px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.65;
+  margin-bottom: 18px;
+}
+.cenario.c2 { border-left-color: var(--a2); }
+.cenario.c3 { border-left-color: var(--a3); }
+.cenario.c4 { border-left-color: var(--a4); }
+
+.ex-tasks { display: flex; flex-direction: column; gap: 12px; }
+
+.ex-task {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: var(--white);
+  border: 2px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 14px 18px;
+}
+
+.tnum {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: var(--light1);
+  border: 2px solid #fed7aa;
+  color: var(--a1);
+  font-weight: 900;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.tnum.t2 { background: var(--light2); border-color: #bfdbfe; color: var(--a2); }
+.tnum.t3 { background: var(--light3); border-color: #a7f3d0; color: var(--a3); }
+.tnum.t4 { background: var(--light4); border-color: #ddd6fe; color: var(--a4); }
+
+.ex-task p { font-size: 14px; font-weight: 600; line-height: 1.6; }
+
+.gabarito-btn {
+  margin-top: 14px;
+  border: 2px dashed #d1d5db;
+  border-radius: 12px;
+  padding: 11px 18px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  text-align: center;
+  transition: all .2s;
+  background: transparent;
+  width: 100%;
+  font-family: var(--sans);
+}
+.gabarito-btn:hover { border-color: var(--a1); color: var(--a1); }
+
+.gabarito-box {
+  display: none;
+  margin-top: 10px;
+  background: #f9fafb;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.8;
+}
+
+/* ANALOGY BOX */
+.analogia {
+  background: var(--white);
+  border: 2px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.analogia .icon { font-size: 36px; flex-shrink: 0; }
+.analogia p { font-size: 14px; font-weight: 600; line-height: 1.65; }
+.analogia strong { color: var(--a1); }
+
+/* DIVIDER */
+.sep {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0;
+}
+.sep .line { flex: 1; height: 2px; background: #e5e7eb; border-radius: 1px; }
+.sep .txt { font-size: 11px; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+/* STEP FLOW */
+.steps { display: flex; gap: 0; align-items: stretch; }
+.step {
+  flex: 1;
+  background: var(--white);
+  border: 2px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 16px 14px;
+  text-align: center;
+  position: relative;
+}
+.step:not(:last-child)::after {
+  content: '→';
+  position: absolute;
+  right: -14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: var(--muted);
+  z-index: 1;
+}
+.step .s-ico { font-size: 28px; margin-bottom: 8px; }
+.step h4 { font-size: 13px; font-weight: 800; margin-bottom: 4px; }
+.step p { font-size: 11px; color: var(--muted); font-weight: 600; line-height: 1.4; }
+.steps { gap: 16px; }
+
+@media (max-width: 900px) {
+  .slide { padding: 20px 20px; }
+  .g2, .g3 { grid-template-columns: 1fr; }
+  .capa-emoji { display: none; }
+  .capa-titulo, .capa-desc { max-width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<nav id="topnav">
+  <div class="tabs">
+    <button class="tab on t1" onclick="irAula(1)" id="tab1">📘 Aula 1</button>
+    <button class="tab t2"    onclick="irAula(2)" id="tab2">📙 Aula 2</button>
+    <button class="tab t3"    onclick="irAula(3)" id="tab3">📗 Aula 3</button>
+    <button class="tab t4"    onclick="irAula(4)" id="tab4">📓 Aula 4</button>
+  </div>
+  <div class="counter" id="ctr">Slide 1 de 7</div>
+</nav>
+
+<div id="stage">
+
+<!-- ══════════════════════════════════════════
+     AULA 1 — O QUE É UM REQUISITO?
+     + REQUISITOS FUNCIONAIS
+     ══════════════════════════════════════════ -->
+
+<!-- 1.1 CAPA -->
+<div class="slide capa on" data-aula="1">
+  <div class="badge-aula">Aula 1 de 4</div>
+  <h1 class="capa-titulo">O que é um <em>Requisito</em>?</h1>
+  <p class="capa-desc">Entendendo do zero: o que o sistema precisa fazer para ser útil de verdade.</p>
+  <div class="capa-info">
+    <div class="info-chip">⏱️ 60 minutos</div>
+    <div class="info-chip">🎯 Nível iniciante</div>
+    <div class="info-chip">✏️ Exercício incluído</div>
+  </div>
+  <div class="capa-emoji">📋</div>
+</div>
+
+<!-- 1.2 O que é requisito -->
+<div class="slide" data-aula="1">
+  <div class="slide-sub"><span class="dot"></span> Conceito básico</div>
+  <h2 class="slide-h">O que é um Requisito?</h2>
+  <div class="g2" style="margin-bottom:16px;">
+    <div>
+      <div class="destaque laranja" style="margin-bottom:14px;">
+        <div class="rotulo">💡 Em palavras simples</div>
+        <p>Um requisito é tudo aquilo que o sistema <strong>precisa fazer</strong> ou <strong>precisa ser</strong> para satisfazer quem vai usá-lo.</p>
+      </div>
+      <div class="analogia">
+        <div class="icon">🏠</div>
+        <p>Antes de construir uma casa, você lista o que ela precisa ter: <strong>2 quartos, 1 banheiro, garagem, cozinha</strong>. Isso são os requisitos da casa. No software é a mesma coisa!</p>
+      </div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:14px;">
+        <span class="card-ico">🤔</span>
+        <h3>Por que os requisitos são importantes?</h3>
+        <ul class="lista" style="margin-top:4px;">
+          <li>Sem eles, ninguém sabe o que construir</li>
+          <li>Evitam que o sistema seja feito "errado"</li>
+          <li>Evitam retrabalho e desperdício de dinheiro</li>
+          <li>São a base para testar se o sistema funciona</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="destaque vermelho">
+    <div class="rotulo">📌 Dado curioso</div>
+    <p>Estudos mostram que a maioria dos projetos de software falha por causa de <strong>requisitos mal definidos</strong> — não por problemas técnicos!</p>
+  </div>
+</div>
+
+<!-- 1.3 Tipos de requisito (visão geral) -->
+<div class="slide" data-aula="1">
+  <div class="slide-sub"><span class="dot"></span> Visão geral</div>
+  <h2 class="slide-h">Existem dois tipos principais</h2>
+  <div class="g2" style="margin-bottom:18px;">
+    <div class="card laranja">
+      <span class="card-ico">⚙️</span>
+      <h3>Requisito Funcional (RF)</h3>
+      <p>O que o sistema <strong>faz</strong>.<br>São as funções, ações e serviços que o software oferece ao usuário.</p>
+      <div style="margin-top:12px;font-family:var(--hand);font-size:20px;color:var(--a1)">
+        "O sistema deve permitir..."<br>
+        "O sistema deve calcular..."<br>
+        "O sistema deve enviar..."
+      </div>
+    </div>
+    <div class="card azul">
+      <span class="card-ico">🛡️</span>
+      <h3>Requisito Não Funcional (RNF)</h3>
+      <p>Como o sistema <strong>se comporta</strong>.<br>São as qualidades que o sistema precisa ter: velocidade, segurança, facilidade de uso.</p>
+      <div style="margin-top:12px;font-family:var(--hand);font-size:20px;color:var(--a2)">
+        "O sistema deve responder em..."<br>
+        "O sistema deve estar disponível..."<br>
+        "O sistema deve ser seguro..."
+      </div>
+    </div>
+  </div>
+  <div class="destaque verde">
+    <div class="rotulo">🎓 Resumindo</div>
+    <p>RF = <strong>O que faz</strong> &nbsp;|&nbsp; RNF = <strong>Como funciona</strong><br>
+    Ex: "O sistema deve fazer login" (RF) &nbsp;|&nbsp; "O login deve ser feito em menos de 2 segundos" (RNF)</p>
+  </div>
+</div>
+
+<!-- 1.4 Requisitos Funcionais - detalhe -->
+<div class="slide" data-aula="1">
+  <div class="slide-sub"><span class="dot"></span> Aprofundando</div>
+  <h2 class="slide-h">Requisitos Funcionais — RF</h2>
+  <div class="g2">
+    <div>
+      <p style="font-size:14px;font-weight:600;color:#374151;margin-bottom:14px;">
+        Um RF descreve uma <strong>ação ou função</strong> que o sistema precisa executar. Sempre começa com:<br>
+        <span style="font-family:var(--hand);font-size:22px;color:var(--a1)">"O sistema deve [verbo]..."</span>
+      </p>
+      <ul class="lista" style="margin-bottom:14px;">
+        <li>Registrar um novo usuário</li>
+        <li>Calcular o total de uma compra</li>
+        <li>Emitir uma nota fiscal</li>
+        <li>Enviar um e-mail de confirmação</li>
+        <li>Bloquear uma conta após erros de senha</li>
+      </ul>
+      <div class="destaque laranja">
+        <div class="rotulo">💡 Dica</div>
+        <p>Use sempre um <strong>verbo de ação</strong>: calcular, enviar, registrar, bloquear, exibir, gerar, permitir, validar...</p>
+      </div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:14px;">
+        <span class="card-ico">📱</span>
+        <h3>Exemplo: App de Delivery</h3>
+        <ul class="lista check" style="font-size:13px;gap:8px;">
+          <li>O sistema deve mostrar o cardápio do restaurante</li>
+          <li>O sistema deve adicionar itens ao carrinho</li>
+          <li>O sistema deve calcular o valor do pedido</li>
+          <li>O sistema deve rastrear o entregador em tempo real</li>
+          <li>O sistema deve notificar quando o pedido sair para entrega</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 1.5 Como escrever um RF -->
+<div class="slide" data-aula="1">
+  <div class="slide-sub"><span class="dot"></span> Na prática</div>
+  <h2 class="slide-h">Como escrever um RF corretamente</h2>
+  <div class="g2" style="margin-bottom:16px;">
+    <div>
+      <div class="destaque vermelho" style="margin-bottom:14px;">
+        <div class="rotulo">❌ RF mal escrito</div>
+        <p>"O sistema deve ser bom no login."</p>
+      </div>
+      <ul class="lista x" style="font-size:13px;">
+        <li>O que é "ser bom"? Cada pessoa entende diferente</li>
+        <li>Impossível saber se está pronto</li>
+        <li>Gera brigas entre cliente e desenvolvedor</li>
+      </ul>
+    </div>
+    <div>
+      <div class="destaque verde" style="margin-bottom:14px;">
+        <div class="rotulo">✅ RF bem escrito</div>
+        <p>"O sistema deve permitir que o usuário faça login com e-mail e senha cadastrados."</p>
+      </div>
+      <ul class="lista check" style="font-size:13px;">
+        <li>Claro e objetivo</li>
+        <li>Dá para testar: funciona ou não funciona</li>
+        <li>Todo mundo entende do mesmo jeito</li>
+      </ul>
+    </div>
+  </div>
+  <div class="sep"><div class="line"></div><div class="txt">Fórmula simples</div><div class="line"></div></div>
+  <div class="card" style="text-align:center;padding:18px;">
+    <span style="font-family:var(--hand);font-size:26px;color:var(--a1)">
+      "O sistema deve" + [verbo de ação] + [o quê] + [para quem / em qual situação]
+    </span>
+  </div>
+</div>
+
+<!-- 1.6 Prioridade dos RFs -->
+<div class="slide" data-aula="1">
+  <div class="slide-sub"><span class="dot"></span> Organização</div>
+  <h2 class="slide-h">Nem todo requisito tem a mesma importância</h2>
+  <p style="font-size:14px;font-weight:600;color:var(--muted);margin-bottom:20px;">
+    Os RFs precisam ser priorizados para que a equipe saiba o que desenvolver primeiro.
+  </p>
+  <div class="g3" style="margin-bottom:16px;">
+    <div class="card laranja">
+      <span class="card-ico">🔴</span>
+      <h3>Essencial</h3>
+      <p>O sistema não funciona sem isso. É obrigatório!</p>
+      <br>
+      <p style="font-size:12px;color:var(--muted)"><em>Ex: Um banco precisa conseguir transferir dinheiro.</em></p>
+    </div>
+    <div class="card azul">
+      <span class="card-ico">🟡</span>
+      <h3>Importante</h3>
+      <p>Melhora muito o sistema, mas dá para lançar sem ele.</p>
+      <br>
+      <p style="font-size:12px;color:var(--muted)"><em>Ex: Histórico de transferências do mês.</em></p>
+    </div>
+    <div class="card verde">
+      <span class="card-ico">🟢</span>
+      <h3>Desejável</h3>
+      <p>Seria legal ter, mas não é urgente. Pode vir depois.</p>
+      <br>
+      <p style="font-size:12px;color:var(--muted)"><em>Ex: Gráfico de gastos por categoria.</em></p>
+    </div>
+  </div>
+  <div class="destaque laranja">
+    <div class="rotulo">💡 Dica prática</div>
+    <p>Sempre comece pelos <strong>essenciais</strong>. Um sistema simples que funciona é melhor que um sistema cheio de funções que não funciona direito!</p>
+  </div>
+</div>
+
+<!-- 1.7 EXERCÍCIO -->
+<div class="slide" data-aula="1">
+  <div class="ex-badge">✏️ Exercício — Aula 1</div>
+  <div class="cenario">
+    🏫 <strong>Situação:</strong> Você foi chamado para ajudar a criar um <strong>sistema de chamada escolar</strong>. O professor precisa marcar a presença dos alunos pelo celular.
+  </div>
+  <div class="ex-tasks">
+    <div class="ex-task">
+      <div class="tnum">1</div>
+      <p>Escreva <strong>4 Requisitos Funcionais</strong> para esse sistema. Use a fórmula: <em>"O sistema deve [verbo]..."</em></p>
+    </div>
+    <div class="ex-task">
+      <div class="tnum">2</div>
+      <p>Coloque uma prioridade para cada RF: <span class="pill laranja">Essencial</span> <span class="pill azul">Importante</span> <span class="pill verde">Desejável</span></p>
+    </div>
+    <div class="ex-task">
+      <div class="tnum">3</div>
+      <p>O RF abaixo está bem escrito? Por quê? <br><em style="color:var(--muted)">"O sistema deve funcionar bem para o professor."</em></p>
+    </div>
+  </div>
+  <button class="gabarito-btn" onclick="toggleGab('g1')">👀 Ver exemplo de resposta</button>
+  <div class="gabarito-box" id="g1">
+    ✅ RF-01 [Essencial]: O sistema deve exibir a lista de alunos da turma selecionada.<br>
+    ✅ RF-02 [Essencial]: O sistema deve permitir que o professor marque presença ou falta para cada aluno.<br>
+    ✅ RF-03 [Importante]: O sistema deve gerar relatório de frequência por aluno no mês.<br>
+    ✅ RF-04 [Desejável]: O sistema deve enviar aviso aos pais quando o aluno tiver mais de 3 faltas.<br><br>
+    ❌ O RF "funcionar bem" está mal escrito — é vago e impossível de testar. O correto seria: "O sistema deve registrar a chamada em até 5 segundos por turma."
+  </div>
+  <a href="/Senai/aula-senai-master/situacao_aula_requisitos.html" class="ml-auto text-blue-500 hover:underline self-center">Próximo &rarr;</a>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     AULA 2 — REQUISITOS NÃO FUNCIONAIS
+     ══════════════════════════════════════════ -->
+
+<!-- 2.1 CAPA -->
+<div class="slide capa" data-aula="2" style="display:none;">
+  <div class="badge-aula b2">Aula 2 de 4</div>
+  <h1 class="capa-titulo">Requisitos <em class="e2">Não Funcionais</em></h1>
+  <p class="capa-desc">A qualidade que ninguém vê — mas todo mundo sente quando está faltando.</p>
+  <div class="capa-info">
+    <div class="info-chip">⏱️ 60 minutos</div>
+    <div class="info-chip">🎯 Nível iniciante</div>
+    <div class="info-chip">✏️ Exercício incluído</div>
+  </div>
+  <div class="capa-emoji">🛡️</div>
+</div>
+
+<!-- 2.2 O que são RNF -->
+<div class="slide" data-aula="2" style="display:none;">
+  <div class="slide-sub"><span class="dot d2"></span> Conceito básico</div>
+  <h2 class="slide-h">O que são Requisitos Não Funcionais?</h2>
+  <div class="g2" style="margin-bottom:16px;">
+    <div>
+      <div class="destaque azul" style="margin-bottom:14px;">
+        <div class="rotulo">💡 Em palavras simples</div>
+        <p>Um RNF não diz <em>o que</em> o sistema faz, mas <strong>como ele faz</strong>: com que velocidade, com que segurança, com que facilidade.</p>
+      </div>
+      <div class="analogia">
+        <div class="icon">🚗</div>
+        <p>Pedir um carro com <strong>ar-condicionado, direção hidráulica e 0 a 100km em 8 segundos</strong> são requisitos não funcionais. Não mudam o <em>que</em> o carro faz (transportar pessoas), mas mudam <em>como</em> faz isso.</p>
+      </div>
+    </div>
+    <div>
+      <div class="card azul">
+        <span class="card-ico">⚠️</span>
+        <h3>Por que são tão importantes?</h3>
+        <ul class="lista" style="font-size:13px;margin-top:6px;">
+          <li>Um sistema lento frustra o usuário, mesmo funcionando</li>
+          <li>Um sistema inseguro pode vazar dados de todos</li>
+          <li>Um sistema difícil de usar é abandonado</li>
+          <li>Um sistema que "cai" o tempo todo não serve para nada</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="destaque laranja">
+    <div class="rotulo">📌 Comparação rápida</div>
+    <p>RF: <strong>"O sistema deve processar pagamentos"</strong> &nbsp;→&nbsp; RNF: <strong>"O pagamento deve ser concluído em menos de 3 segundos"</strong></p>
+  </div>
+</div>
+
+<!-- 2.3 Tipos de RNF -->
+<div class="slide" data-aula="2" style="display:none;">
+  <div class="slide-sub"><span class="dot d2"></span> Categorias</div>
+  <h2 class="slide-h">Os 5 tipos mais comuns de RNF</h2>
+  <div class="g2">
+    <ul class="lista" style="gap:14px;">
+      <li>
+        <div>
+          <strong>⚡ Desempenho</strong><br>
+          <span style="font-size:13px;color:var(--muted)">Quão rápido o sistema responde.<br>
+          <em>Ex: A busca deve retornar resultados em até 2 segundos.</em></span>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>🔒 Segurança</strong><br>
+          <span style="font-size:13px;color:var(--muted)">Proteção dos dados e do acesso.<br>
+          <em>Ex: Senhas devem ficar criptografadas no banco de dados.</em></span>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>🟢 Disponibilidade</strong><br>
+          <span style="font-size:13px;color:var(--muted)">Quanto tempo o sistema fica no ar.<br>
+          <em>Ex: O sistema deve funcionar 24h por dia, 7 dias por semana.</em></span>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>😊 Usabilidade</strong><br>
+          <span style="font-size:13px;color:var(--muted)">Facilidade de uso pelo usuário.<br>
+          <em>Ex: Um usuário novo deve conseguir fazer um pedido em menos de 5 minutos.</em></span>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>📱 Compatibilidade</strong><br>
+          <span style="font-size:13px;color:var(--muted)">Funcionar em diferentes dispositivos e sistemas.<br>
+          <em>Ex: O site deve funcionar no celular, tablet e computador.</em></span>
+        </div>
+      </li>
+    </ul>
+    <div>
+      <div class="card azul">
+        <span class="card-ico">📊</span>
+        <h3>Resumo visual</h3>
+        <table class="tabela" style="margin-top:8px;font-size:12px;">
+          <thead><tr><th>Tipo</th><th>Pergunta-chave</th></tr></thead>
+          <tbody>
+            <tr><td>⚡ Desempenho</td><td>Quão rápido?</td></tr>
+            <tr><td>🔒 Segurança</td><td>Quão seguro?</td></tr>
+            <tr><td>🟢 Disponibilidade</td><td>Por quanto tempo?</td></tr>
+            <tr><td>😊 Usabilidade</td><td>Quão fácil?</td></tr>
+            <tr><td>📱 Compatibilidade</td><td>Em quais lugares?</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 2.4 RF vs RNF lado a lado -->
+<div class="slide" data-aula="2" style="display:none;">
+  <div class="slide-sub"><span class="dot d2"></span> Comparação</div>
+  <h2 class="slide-h">RF e RNF — Lado a Lado</h2>
+  <p style="font-size:14px;font-weight:600;color:var(--muted);margin-bottom:18px;">
+    Veja como os dois tipos de requisito se complementam no mesmo sistema:
+  </p>
+  <table class="tabela" style="margin-bottom:16px;">
+    <thead>
+      <tr>
+        <th>Sistema</th>
+        <th>🟠 Requisito Funcional (o que faz)</th>
+        <th>🔵 Requisito Não Funcional (como faz)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>🛒 E-commerce</td>
+        <td>O sistema deve finalizar a compra com cartão de crédito</td>
+        <td>O pagamento deve ser confirmado em até 5 segundos</td>
+      </tr>
+      <tr>
+        <td>🏦 Banco</td>
+        <td>O sistema deve permitir transferência Pix</td>
+        <td>O Pix deve ser processado 24h por dia, 365 dias por ano</td>
+      </tr>
+      <tr>
+        <td>📚 Escola</td>
+        <td>O sistema deve emitir boletim do aluno</td>
+        <td>O boletim deve poder ser acessado de qualquer celular</td>
+      </tr>
+      <tr>
+        <td>🏥 Clínica</td>
+        <td>O sistema deve registrar prontuário do paciente</td>
+        <td>Os dados do paciente devem ser criptografados (LGPD)</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="destaque azul">
+    <div class="rotulo">🎓 Lembre-se</div>
+    <p>Para cada RF importante, vale perguntar: <strong>"Como esse requisito deve se comportar?"</strong> A resposta vira um RNF!</p>
+  </div>
+</div>
+
+<!-- 2.5 Como escrever RNF -->
+<div class="slide" data-aula="2" style="display:none;">
+  <div class="slide-sub"><span class="dot d2"></span> Na prática</div>
+  <h2 class="slide-h">Como escrever um RNF que presta</h2>
+  <p style="font-size:14px;font-weight:700;margin-bottom:16px;">O segredo é usar <strong>números e medidas</strong>. Sem isso, o RNF não tem valor.</p>
+  <div class="g2" style="margin-bottom:14px;">
+    <div>
+      <div class="destaque vermelho" style="margin-bottom:14px;">
+        <div class="rotulo">❌ RNF RUIM — vago</div>
+        <p>"O sistema deve ser rápido."</p>
+      </div>
+      <div class="destaque vermelho">
+        <div class="rotulo">❌ RNF RUIM — vago</div>
+        <p>"O sistema deve ser seguro."</p>
+      </div>
+    </div>
+    <div>
+      <div class="destaque verde" style="margin-bottom:14px;">
+        <div class="rotulo">✅ RNF BOM — mensurável</div>
+        <p>"O sistema deve responder a qualquer pesquisa em menos de <strong>3 segundos</strong>."</p>
+      </div>
+      <div class="destaque verde">
+        <div class="rotulo">✅ RNF BOM — mensurável</div>
+        <p>"As senhas devem ter no mínimo <strong>8 caracteres</strong> com letras e números."</p>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="text-align:center;padding:16px;">
+    <span style="font-family:var(--hand);font-size:24px;color:var(--a2)">
+      Se você não consegue medir, não é um bom requisito!
+    </span>
+  </div>
+</div>
+
+<!-- 2.6 Exemplos do dia a dia -->
+<div class="slide" data-aula="2" style="display:none;">
+  <div class="slide-sub"><span class="dot d2"></span> Mundo real</div>
+  <h2 class="slide-h">RNF no mundo real — Você já sentiu isso!</h2>
+  <div class="g3" style="margin-bottom:16px;">
+    <div class="card vermelho">
+      <span class="card-ico">🐢</span>
+      <h3>Desempenho ruim</h3>
+      <p>Já ficou esperando um site carregar por mais de 10 segundos e desistiu? Isso é um <strong>RNF de desempenho</strong> não atendido.</p>
+    </div>
+    <div class="card azul">
+      <span class="card-ico">😵</span>
+      <h3>Usabilidade ruim</h3>
+      <p>Já entrou num app e não conseguiu achar como fazer o que queria? Isso é um <strong>RNF de usabilidade</strong> não atendido.</p>
+    </div>
+    <div class="card laranja">
+      <span class="card-ico">📵</span>
+      <h3>Disponibilidade ruim</h3>
+      <p>Já tentou acessar um sistema e ele estava "fora do ar"? Isso é um <strong>RNF de disponibilidade</strong> não atendido.</p>
+    </div>
+  </div>
+  <div class="destaque azul">
+    <div class="rotulo">💡 Conclusão</div>
+    <p>Os RNFs são o que fazem o usuário <strong>adorar ou odiar</strong> um sistema. Um sistema pode ter todas as funções certas e ainda assim ser inutilizável por causa de RNFs ruins!</p>
+  </div>
+</div>
+
+<!-- 2.7 EXERCÍCIO -->
+<div class="slide" data-aula="2" style="display:none;">
+  <div class="ex-badge b2">✏️ Exercício — Aula 2</div>
+  <div class="cenario c2">
+    🏦 <strong>Situação:</strong> Você está levantando requisitos de um <strong>aplicativo de banco digital</strong>. Já foram definidos os Requisitos Funcionais. Agora é hora de pensar nos Não Funcionais.
+  </div>
+  <div class="ex-tasks">
+    <div class="ex-task">
+      <div class="tnum t2">1</div>
+      <p>Escreva <strong>1 RNF para cada tipo</strong>: Desempenho, Segurança e Disponibilidade. Use medidas concretas (números, porcentagem, tempo).</p>
+    </div>
+    <div class="ex-task">
+      <div class="tnum t2">2</div>
+      <p>O RNF abaixo está bom ou ruim? Reescreva-o melhor:<br>
+      <em style="color:var(--muted)">"O app deve ser seguro para os usuários."</em></p>
+    </div>
+    <div class="ex-task">
+      <div class="tnum t2">3</div>
+      <p>Na sua opinião, qual o RNF <strong>mais importante</strong> para um banco digital? Explique com suas palavras.</p>
+    </div>
+  </div>
+  <button class="gabarito-btn" onclick="toggleGab('g2')">👀 Ver exemplo de resposta</button>
+  <div class="gabarito-box" id="g2">
+    ✅ Desempenho: "As transações Pix devem ser concluídas em até 10 segundos."<br>
+    ✅ Segurança: "O app deve exigir confirmação biométrica (digital ou rosto) para cada transação."<br>
+    ✅ Disponibilidade: "O app deve funcionar 24 horas por dia, todos os dias do ano."<br><br>
+    ❌ "Seguro para os usuários" está vago. Melhor: "O app deve bloquear o acesso após 3 tentativas erradas de senha e notificar o usuário por e-mail."<br><br>
+    🏆 O mais importante: Segurança — porque envolve dinheiro real das pessoas. Qualquer falha pode causar prejuízo financeiro grave.
+  </div>
+  <a href="/Senai/aula-senai-master/situacao_aula_requisitos.html" class="ml-auto text-blue-500 hover:underline self-center">Próximo &rarr;</a>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     AULA 3 — COMO DESCOBRIR OS REQUISITOS
+     (Técnicas de Coleta)
+     ══════════════════════════════════════════ -->
+
+<!-- 3.1 CAPA -->
+<div class="slide capa" data-aula="3" style="display:none;">
+  <div class="badge-aula b3">Aula 3 de 4</div>
+  <h1 class="capa-titulo">Como <em class="e3">Descobrir</em> os Requisitos?</h1>
+  <p class="capa-desc">Técnicas simples para levantar o que o sistema realmente precisa fazer.</p>
+  <div class="capa-info">
+    <div class="info-chip">⏱️ 60 minutos</div>
+    <div class="info-chip">🎯 Nível iniciante</div>
+    <div class="info-chip">✏️ Exercício incluído</div>
+  </div>
+  <div class="capa-emoji">🔎</div>
+</div>
+
+<!-- 3.2 O problema -->
+<div class="slide" data-aula="3" style="display:none;">
+  <div class="slide-sub"><span class="dot d3"></span> O desafio</div>
+  <h2 class="slide-h">O problema: ninguém sabe exatamente o que quer!</h2>
+  <div class="g2" style="margin-bottom:16px;">
+    <div>
+      <div class="destaque verde" style="margin-bottom:14px;">
+        <div class="rotulo">💬 Situação real</div>
+        <p>O cliente diz: <strong>"Quero um sistema de vendas."</strong><br><br>
+        Mas o que ele realmente quer? Controle de estoque? Emissão de nota fiscal? Relatórios? Integração com o delivery?</p>
+      </div>
+      <div class="analogia">
+        <div class="icon">💇</div>
+        <p>É como ir ao cabeleireiro e dizer <strong>"corta um pouco"</strong>. Cada cabeleireiro vai entender diferente! A tarefa do analista é descobrir exatamente o que o cliente precisa.</p>
+      </div>
+    </div>
+    <div>
+      <div class="card verde">
+        <span class="card-ico">🕵️</span>
+        <h3>O que é elicitação?</h3>
+        <p style="margin-bottom:12px;">É o nome bonito para o processo de <strong>descobrir e levantar os requisitos</strong> junto com quem vai usar o sistema.</p>
+        <ul class="lista" style="font-size:13px;">
+          <li>Elicitar = extrair, descobrir, levantar</li>
+          <li>Feita pelo Analista de Requisitos</li>
+          <li>Usa diferentes técnicas dependendo do contexto</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 3.3 Quem consultar -->
+<div class="slide" data-aula="3" style="display:none;">
+  <div class="slide-sub"><span class="dot d3"></span> Passo 1</div>
+  <h2 class="slide-h">Primeiro: identifique quem consultar</h2>
+  <p style="font-size:14px;font-weight:600;color:var(--muted);margin-bottom:18px;">
+    Essas pessoas se chamam <strong>stakeholders</strong> — todos que têm interesse no sistema.
+  </p>
+  <div class="g3" style="margin-bottom:16px;">
+    <div class="card laranja">
+      <span class="card-ico">👤</span>
+      <h3>Usuário Final</h3>
+      <p>Quem vai usar o sistema no dia a dia. Sabe o que precisa na prática.</p>
+      <p style="margin-top:8px;font-size:12px;color:var(--muted)"><em>Ex: Caixa, secretária, vendedor</em></p>
+    </div>
+    <div class="card azul">
+      <span class="card-ico">👔</span>
+      <h3>Gestor / Cliente</h3>
+      <p>Quem pediu o sistema e paga pelo projeto. Sabe os objetivos do negócio.</p>
+      <p style="margin-top:8px;font-size:12px;color:var(--muted)"><em>Ex: Diretor, gerente, dono</em></p>
+    </div>
+    <div class="card verde">
+      <span class="card-ico">⚙️</span>
+      <h3>Equipe Técnica</h3>
+      <p>Desenvolvedores, DBA. Sabem o que é possível fazer tecnicamente.</p>
+      <p style="margin-top:8px;font-size:12px;color:var(--muted)"><em>Ex: Programador, arquiteto</em></p>
+    </div>
+  </div>
+  <div class="destaque verde">
+    <div class="rotulo">💡 Dica de ouro</div>
+    <p>Cada stakeholder tem uma visão diferente do sistema. O segredo é <strong>ouvir todos</strong> e encontrar o que realmente importa para o projeto funcionar.</p>
+  </div>
+</div>
+
+<!-- 3.4 Entrevista -->
+<div class="slide" data-aula="3" style="display:none;">
+  <div class="slide-sub"><span class="dot d3"></span> Técnica 1</div>
+  <h2 class="slide-h">Entrevista — Conversar para descobrir</h2>
+  <div class="g2" style="margin-bottom:14px;">
+    <div>
+      <div class="destaque verde" style="margin-bottom:14px;">
+        <div class="rotulo">📌 O que é?</div>
+        <p>Uma conversa com o stakeholder para entender o que ele precisa. É a técnica mais usada e mais poderosa!</p>
+      </div>
+      <ul class="lista" style="margin-bottom:14px;">
+        <li>Pode ser presencial ou por videochamada</li>
+        <li>Pode ter roteiro (perguntas planejadas) ou ser livre</li>
+        <li>Melhor para entender bem a fundo</li>
+        <li>Mais demorada que outras técnicas</li>
+      </ul>
+      <div class="destaque laranja">
+        <div class="rotulo">⚠️ Cuidado!</div>
+        <p>Prefira perguntas <strong>abertas</strong> ("Me conte como funciona...") do que fechadas ("Você usa relatório diário?"). Perguntas abertas revelam muito mais!</p>
+      </div>
+    </div>
+    <div>
+      <div class="card verde">
+        <span class="card-ico">💬</span>
+        <h3>Exemplos de boas perguntas</h3>
+        <ul class="lista check" style="font-size:13px;gap:10px;margin-top:6px;">
+          <li>"Me conte como você faz esse processo hoje, do início ao fim."</li>
+          <li>"O que te incomoda mais no jeito que as coisas funcionam hoje?"</li>
+          <li>"O que você espera que o sistema novo faça por você?"</li>
+          <li>"Existe alguma situação difícil que o sistema precisa resolver?"</li>
+          <li>"Quem mais usa esse processo além de você?"</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 3.5 Questionário e Observação -->
+<div class="slide" data-aula="3" style="display:none;">
+  <div class="slide-sub"><span class="dot d3"></span> Técnica 2 e 3</div>
+  <h2 class="slide-h">Questionário e Observação</h2>
+  <div class="g2" style="margin-bottom:14px;">
+    <div class="card verde">
+      <span class="card-ico">📋</span>
+      <h3>Questionário</h3>
+      <p style="margin-bottom:12px;">Um formulário com perguntas enviado para muitas pessoas ao mesmo tempo (Google Forms, por exemplo).</p>
+      <ul class="lista check" style="font-size:13px;gap:8px;">
+        <li>Ótimo quando há muitos usuários para consultar</li>
+        <li>Rápido e barato de aplicar</li>
+        <li>Não permite aprofundar as respostas</li>
+      </ul>
+      <div style="margin-top:12px;font-family:var(--hand);font-size:18px;color:var(--a3)">
+        Ideal para: validar ideias com muita gente de uma vez só.
+      </div>
+    </div>
+    <div class="card roxo">
+      <span class="card-ico">👁️</span>
+      <h3>Observação</h3>
+      <p style="margin-bottom:12px;">O analista vai até onde o usuário trabalha e <strong>observa</strong> como ele faz as tarefas no dia a dia.</p>
+      <ul class="lista check" style="font-size:13px;gap:8px;">
+        <li>Revela o que o usuário não sabe descrever</li>
+        <li>Captura detalhes que ninguém menciona</li>
+        <li>O usuário às vezes faz diferente do que fala!</li>
+      </ul>
+      <div style="margin-top:12px;font-family:var(--hand);font-size:18px;color:var(--a4)">
+        Ideal para: processos complexos do cotidiano.
+      </div>
+    </div>
+  </div>
+  <div class="destaque verde">
+    <div class="rotulo">💡 Exemplo de observação</div>
+    <p>Uma recepcionista disse: <em>"Faço tudo no sistema"</em>. Mas ao ser observada, a analista descobriu que ela usava <strong>3 post-its colados no monitor</strong> para lembrar informações. Isso virou um requisito de "memorização de favoritos" no sistema!</p>
+  </div>
+</div>
+
+<!-- 3.6 Workshop e Prototipação -->
+<div class="slide" data-aula="3" style="display:none;">
+  <div class="slide-sub"><span class="dot d3"></span> Técnica 4 e 5</div>
+  <h2 class="slide-h">Reunião em Grupo e Protótipo</h2>
+  <div class="g2" style="margin-bottom:14px;">
+    <div class="card verde">
+      <span class="card-ico">🧩</span>
+      <h3>Workshop / Reunião em Grupo</h3>
+      <p style="margin-bottom:12px;">Uma reunião com várias pessoas ao mesmo tempo: usuários, gestores e analistas juntos para levantar e alinhar os requisitos.</p>
+      <ul class="lista check" style="font-size:13px;gap:8px;">
+        <li>Resolve conflitos na hora</li>
+        <li>Todos chegam a um acordo juntos</li>
+        <li>Gera muitos requisitos em pouco tempo</li>
+        <li>Precisa de um facilitador habilidoso</li>
+      </ul>
+    </div>
+    <div class="card laranja">
+      <span class="card-ico">🖼️</span>
+      <h3>Prototipação (Tela Rascunho)</h3>
+      <p style="margin-bottom:12px;">Criar um "esboço" de como o sistema vai ser — pode ser no papel mesmo! — para o usuário ver e validar.</p>
+      <ul class="lista check" style="font-size:13px;gap:8px;">
+        <li>O usuário "vê" o sistema antes de ser feito</li>
+        <li>Aponta erros antes de programar</li>
+        <li>Pode ser feito no papel, no Figma ou no PowerPoint</li>
+        <li>Economiza muito tempo e dinheiro</li>
+      </ul>
+    </div>
+  </div>
+  <div class="destaque laranja">
+    <div class="rotulo">💡 Dica prática</div>
+    <p>Na maioria dos projetos, a melhor estratégia é combinar: <strong>Entrevista</strong> para entender → <strong>Workshop</strong> para alinhar → <strong>Protótipo</strong> para confirmar!</p>
+  </div>
+</div>
+
+<!-- 3.7 EXERCÍCIO -->
+<div class="slide" data-aula="3" style="display:none;">
+  <div class="ex-badge b3">✏️ Exercício — Aula 3</div>
+  <div class="cenario c3">
+    🍕 <strong>Situação:</strong> Uma pizzaria quer criar um <strong>sistema de pedidos online</strong>. Hoje tudo é feito por telefone e há muita confusão com os pedidos errados.
+  </div>
+  <div class="ex-tasks">
+    <div class="ex-task">
+      <div class="tnum t3">1</div>
+      <p>Liste os <strong>stakeholders</strong> que você precisaria consultar. Quem são eles e o que cada um sabe?</p>
+    </div>
+    <div class="ex-task">
+      <div class="tnum t3">2</div>
+      <p>Escolha <strong>2 técnicas de coleta</strong> que usaria nesse projeto e explique por quê.</p>
+    </div>
+    <div class="ex-task">
+      <div class="tnum t3">3</div>
+      <p>Escreva <strong>4 perguntas de entrevista</strong> que você faria ao atendente da pizzaria. Use perguntas abertas.</p>
+    </div>
+  </div>
+  <button class="gabarito-btn" onclick="toggleGab('g3')">👀 Ver exemplo de resposta</button>
+  <div class="gabarito-box" id="g3">
+    👥 Stakeholders: Dono da pizzaria (objetivos do negócio), atendente (como funciona hoje), entregador (fluxo de entrega), cliente (o que espera ao pedir), cozinheiro (como recebe os pedidos).<br><br>
+    🔧 Técnicas: Observação (para ver como o atendente lida com os pedidos no telefone hoje) + Entrevista (para entender as dores de cada pessoa).<br><br>
+    💬 Perguntas de entrevista:<br>
+    1. "Me descreva como funciona o processo de receber um pedido, do início ao fim."<br>
+    2. "Quais são os erros mais comuns que acontecem hoje nos pedidos?"<br>
+    3. "O que você precisa saber do cliente para registrar um pedido corretamente?"<br>
+    4. "O que você mais sentiria falta se o telefone sumisse e tivesse que usar só o sistema?"
+  </div>
+  <a href="/Senai/aula-senai-master/situacao_aula_requisitos.html" class="ml-auto text-blue-500 hover:underline self-center">Próximo &rarr;</a>
+
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     AULA 4 — DOCUMENTANDO E VALIDANDO
+     ══════════════════════════════════════════ -->
+
+<!-- 4.1 CAPA -->
+<div class="slide capa" data-aula="4" style="display:none;">
+  <div class="badge-aula b4">Aula 4 de 4</div>
+  <h1 class="capa-titulo">Documentando e <em class="e4">Validando</em></h1>
+  <p class="capa-desc">Como organizar e confirmar os requisitos — fechando o ciclo de análise.</p>
+  <div class="capa-info">
+    <div class="info-chip">⏱️ 60 minutos</div>
+    <div class="info-chip">🎯 Nível iniciante</div>
+    <div class="info-chip">✏️ Exercício final</div>
+  </div>
+  <div class="capa-emoji">📝</div>
+</div>
+
+<!-- 4.2 Por que documentar -->
+<div class="slide" data-aula="4" style="display:none;">
+  <div class="slide-sub"><span class="dot d4"></span> Importância</div>
+  <h2 class="slide-h">Por que documentar os requisitos?</h2>
+  <div class="g2" style="margin-bottom:14px;">
+    <div>
+      <div class="destaque roxo" style="margin-bottom:14px;">
+        <div class="rotulo">📌 Situação real</div>
+        <p>Imagine que você levantou todos os requisitos com o cliente, mas não anotou nada. 3 meses depois, o sistema está pronto — mas o cliente diz que <strong>"não era bem isso que eu queria"</strong>.</p>
+      </div>
+      <div class="destaque laranja">
+        <div class="rotulo">💡 A documentação resolve isso</div>
+        <p>Com o documento de requisitos assinado, todos <strong>concordaram e registraram</strong> o que deveria ser feito. É a proteção do desenvolvedor e do cliente!</p>
+      </div>
+    </div>
+    <div>
+      <div class="card roxo">
+        <span class="card-ico">📄</span>
+        <h3>O que a documentação garante?</h3>
+        <ul class="lista" style="font-size:13px;gap:10px;margin-top:6px;">
+          <li>Todos sabem o que precisa ser feito</li>
+          <li>Novos membros da equipe entendem o projeto</li>
+          <li>Base para criar os testes do sistema</li>
+          <li>Referência quando surgem dúvidas</li>
+          <li>Prova do que foi acordado com o cliente</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 4.3 Como organizar um RF documentado -->
+<div class="slide" data-aula="4" style="display:none;">
+  <div class="slide-sub"><span class="dot d4"></span> Estrutura</div>
+  <h2 class="slide-h">Como organizar um requisito documentado</h2>
+  <p style="font-size:14px;font-weight:600;color:var(--muted);margin-bottom:16px;">
+    Cada requisito deve ter informações básicas para ser útil e rastreável.
+  </p>
+  <div class="g2" style="margin-bottom:14px;">
+    <div>
+      <table class="tabela">
+        <thead><tr><th>Campo</th><th>O que significa</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Código</strong></td><td>Um número único: RF-01, RNF-02...</td></tr>
+          <tr><td><strong>Nome</strong></td><td>Título curto do requisito</td></tr>
+          <tr><td><strong>Descrição</strong></td><td>O que o sistema deve fazer (com detalhes)</td></tr>
+          <tr><td><strong>Prioridade</strong></td><td>Essencial / Importante / Desejável</td></tr>
+          <tr><td><strong>Origem</strong></td><td>Quem pediu esse requisito</td></tr>
+          <tr><td><strong>Critério de aceite</strong></td><td>Como saber que está pronto?</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <div class="card roxo">
+        <span class="card-ico">📋</span>
+        <h3>Exemplo de RF documentado</h3>
+        <table class="tabela" style="font-size:12px;margin-top:6px;">
+          <tbody>
+            <tr><td><strong>Código</strong></td><td>RF-03</td></tr>
+            <tr><td><strong>Nome</strong></td><td>Recuperar senha</td></tr>
+            <tr><td><strong>Descrição</strong></td><td>O sistema deve enviar um link para o e-mail do usuário redefinir a senha</td></tr>
+            <tr><td><strong>Prioridade</strong></td><td><span class="pill laranja">Essencial</span></td></tr>
+            <tr><td><strong>Origem</strong></td><td>Entrevista com usuários (João, Maria)</td></tr>
+            <tr><td><strong>Aceite</strong></td><td>Link chega em até 2 min e expira em 30 min</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 4.4 Validação -->
+<div class="slide" data-aula="4" style="display:none;">
+  <div class="slide-sub"><span class="dot d4"></span> Validação</div>
+  <h2 class="slide-h">Validar: confirmar que está certo</h2>
+  <div class="g2" style="margin-bottom:14px;">
+    <div>
+      <div class="destaque roxo" style="margin-bottom:14px;">
+        <div class="rotulo">📌 O que é validação?</div>
+        <p>É o processo de <strong>confirmar com o cliente e os usuários</strong> que os requisitos levantados realmente refletem o que eles precisam.</p>
+      </div>
+      <div class="analogia">
+        <div class="icon">🍽️</div>
+        <p>É como pedir ao garçom que repita o pedido antes de ir à cozinha: <strong>"Então, você quer um filé ao ponto, sem cebola, com fritas?"</strong>. Confirmar evita erros!</p>
+      </div>
+    </div>
+    <div>
+      <div class="card roxo">
+        <span class="card-ico">✔️</span>
+        <h3>Como validar?</h3>
+        <ul class="lista" style="font-size:13px;gap:10px;margin-top:6px;">
+          <li><strong>Revisão com o cliente:</strong> apresentar a lista de requisitos e confirmar cada um</li>
+          <li><strong>Protótipo:</strong> mostrar um esboço do sistema para o usuário aprovar</li>
+          <li><strong>Casos de uso:</strong> contar como o sistema vai ser usado passo a passo</li>
+          <li><strong>Assinatura:</strong> o cliente assina o documento confirmando que está de acordo</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 4.5 Erros comuns de iniciante -->
+<div class="slide" data-aula="4" style="display:none;">
+  <div class="slide-sub"><span class="dot d4"></span> Atenção</div>
+  <h2 class="slide-h">Erros comuns de quem está começando</h2>
+  <div class="g2" style="margin-bottom:14px;">
+    <div>
+      <ul class="lista x" style="gap:16px;">
+        <li>
+          <div>
+            <strong>Requisitos vagos</strong><br>
+            <span style="font-size:13px;color:var(--muted)">"O sistema deve ser bom" → Como saber se ficou bom?</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong>Assumir sem perguntar</strong><br>
+            <span style="font-size:13px;color:var(--muted)">Inventar o que o cliente precisa sem verificar.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong>Não documentar</strong><br>
+            <span style="font-size:13px;color:var(--muted)">Combinar verbalmente e esquecer de registrar.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong>Ignorar os RNFs</strong><br>
+            <span style="font-size:13px;color:var(--muted)">Focar só no que o sistema faz e esquecer a qualidade.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong>Consultar só uma pessoa</strong><br>
+            <span style="font-size:13px;color:var(--muted)">O dono sabe o negócio, mas o usuário sabe o dia a dia.</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <div class="card roxo">
+        <span class="card-ico">🏆</span>
+        <h3>Boas práticas para iniciantes</h3>
+        <ul class="lista check" style="font-size:13px;gap:10px;margin-top:6px;">
+          <li>Sempre anote tudo durante as entrevistas</li>
+          <li>Releia os requisitos e pergunte: "É possível testar isso?"</li>
+          <li>Confirme com o cliente antes de passar para o desenvolvimento</li>
+          <li>Numere cada requisito (RF-01, RF-02...)</li>
+          <li>Defina uma prioridade para cada requisito</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 4.6 Visão geral do processo -->
+<div class="slide" data-aula="4" style="display:none;">
+  <div class="slide-sub"><span class="dot d4"></span> Resumão</div>
+  <h2 class="slide-h">O ciclo completo de Requisitos</h2>
+  <p style="font-size:14px;font-weight:600;color:var(--muted);margin-bottom:22px;">
+    Agora você conhece todas as etapas do início ao fim:
+  </p>
+  <div class="steps" style="margin-bottom:20px;">
+    <div class="step">
+      <div class="s-ico">🔍</div>
+      <h4>1. Identificar</h4>
+      <p>Quem são os stakeholders?</p>
+    </div>
+    <div class="step">
+      <div class="s-ico">🗣️</div>
+      <h4>2. Coletar</h4>
+      <p>Entrevistas, questionários, observação...</p>
+    </div>
+    <div class="step">
+      <div class="s-ico">✍️</div>
+      <h4>3. Documentar</h4>
+      <p>Registrar RFs e RNFs com código e prioridade</p>
+    </div>
+    <div class="step">
+      <div class="s-ico">✅</div>
+      <h4>4. Validar</h4>
+      <p>Confirmar com o cliente</p>
+    </div>
+    <div class="step">
+      <div class="s-ico">🚀</div>
+      <h4>5. Desenvolver</h4>
+      <p>A equipe constrói com base nos requisitos</p>
+    </div>
+  </div>
+  <div class="destaque roxo">
+    <div class="rotulo">🎓 Você aprendeu nas 4 aulas</div>
+    <p>
+      <strong>Aula 1:</strong> O que são requisitos e Requisitos Funcionais &nbsp;|&nbsp;
+      <strong>Aula 2:</strong> Requisitos Não Funcionais &nbsp;|&nbsp;
+      <strong>Aula 3:</strong> Como levantar (Entrevista, Observação, Workshop...) &nbsp;|&nbsp;
+      <strong>Aula 4:</strong> Documentar e Validar
+    </p>
+  </div>
+</div>
+
+<!-- 4.7 EXERCÍCIO FINAL -->
+<div class="slide" data-aula="4" style="display:none;">
+  <div class="ex-badge b4">✏️ Exercício Final — Aula 4</div>
+  <div class="cenario c4">
+    🎓 <strong>Situação:</strong> Uma escola técnica quer um <strong>sistema de gestão de estágios</strong>. Os alunos precisam registrar horas de estágio, os professores orientadores precisam acompanhar, e a coordenação precisa de relatórios.
+  </div>
+  <div class="ex-tasks">
+    <div class="ex-task">
+      <div class="tnum t4">1</div>
+      <p>Escreva <strong>3 Requisitos Funcionais</strong> e <strong>2 Requisitos Não Funcionais</strong> para esse sistema. Use código (RF-01, RNF-01) e prioridade.</p>
+    </div>
+    <div class="ex-task">
+      <div class="tnum t4">2</div>
+      <p>Escolha <strong>1 técnica de coleta</strong> e diga com qual stakeholder a usaria e por quê.</p>
+    </div>
+    <div class="ex-task">
+      <div class="tnum t4">3</div>
+      <p>Preencha a ficha de um requisito completo (código, nome, descrição, prioridade, origem e critério de aceite) para um dos seus RFs.</p>
+    </div>
+  </div>
+  <button class="gabarito-btn" onclick="toggleGab('g4')">👀 Ver exemplo de resposta</button>
+  <div class="gabarito-box" id="g4">
+    ✅ RF-01 [Essencial]: O sistema deve permitir que o aluno registre as horas de estágio diariamente.<br>
+    ✅ RF-02 [Essencial]: O sistema deve exibir ao professor orientador o total de horas registradas por cada aluno.<br>
+    ✅ RF-03 [Importante]: O sistema deve gerar relatório em PDF com o histórico de horas do aluno.<br>
+    ✅ RNF-01 [Essencial]: O sistema deve funcionar no celular (Android e iPhone).<br>
+    ✅ RNF-02 [Importante]: O registro de horas deve ser salvo em até 3 segundos.<br><br>
+    🔧 Técnica: Entrevista com o aluno — porque ele é quem vai usar o sistema no dia a dia e sabe o que precisa.<br><br>
+    📋 Ficha do RF-01:<br>
+    Código: RF-01 | Nome: Registro de horas | Descrição: O sistema deve permitir ao aluno registrar a data, horário de entrada e saída do estágio.<br>
+    Prioridade: Essencial | Origem: Entrevista com alunos | Aceite: Registro salvo com sucesso e visível para o orientador.
+  </div>
+  <a href="/Senai/aula-senai-master/situacao_aula_requisitos.html" class="ml-auto text-blue-500 hover:underline self-center">Próximo &rarr;</a>
+
+</div>
+
+</div><!-- /stage -->
+
+<div id="bot">
+  <button class="btn" id="btnPrev" onclick="navSlide(-1)" disabled>← Anterior</button>
+  <div id="progbar"><div id="progfill" style="width:0%"></div></div>
+  <button class="btn" id="btnNext" onclick="navSlide(1)">Próximo →</button>
+</div>
+
+<script>
+// ── STATE ──
+const slides = Array.from(document.querySelectorAll('.slide'));
+let cur = 0;
+let aulaAtual = 1;
+
+const aulaColors = { 1: '#f97316', 2: '#3b82f6', 3: '#10b981', 4: '#8b5cf6' };
+
+function getSlides(aula) {
+  return slides.filter(s => s.dataset.aula == aula);
+}
+
+function getLocalIndex(aula) {
+  return getSlides(aula).indexOf(slides[cur]);
+}
+
+function irAula(aula) {
+  aulaAtual = aula;
+  const sl = getSlides(aula);
+  // hide all
+  slides.forEach(s => { s.style.display = 'none'; s.classList.remove('on'); });
+  // show first of aula
+  cur = slides.indexOf(sl[0]);
+  sl[0].style.display = 'flex';
+  sl[0].classList.add('on');
+  // update tabs
+  for (let i=1;i<=4;i++) {
+    const t = document.getElementById('tab'+i);
+    t.classList.remove('on','t1','t2','t3','t4');
+  }
+  const tab = document.getElementById('tab'+aula);
+  tab.classList.add('on','t'+aula);
+  update();
+}
+
+function navSlide(dir) {
+  const sl = getSlides(aulaAtual);
+  const localIdx = sl.indexOf(slides[cur]);
+  const newLocal = localIdx + dir;
+  if (newLocal < 0 || newLocal >= sl.length) return;
+  slides[cur].style.display = 'none';
+  slides[cur].classList.remove('on');
+  cur = slides.indexOf(sl[newLocal]);
+  slides[cur].style.display = 'flex';
+  slides[cur].classList.add('on');
+}
+
+function update() {
+  const sl = getSlides(aulaAtual);
+  const localIdx = sl.indexOf(slides[cur]);
+  const total = sl.length;
+  const pct = ((localIdx + 1) / total) * 100;
+  document.getElementById('progfill').style.width = pct + '%';
+  document.getElementById('progfill').style.background = aulaColors[aulaAtual];
+  document.getElementById('ctr').textContent = `Slide ${localIdx+1} de ${total}`;
+  document.getElementById('btnPrev').disabled = localIdx === 0;
+  document.getElementById('btnNext').disabled = localIdx === total - 1;
+}
+
+function toggleGab(id) {
+  const box = document.getElementById(id);
+  const showing = box.style.display === 'block';
+  box.style.display = showing ? 'none' : 'block';
+}
+
+// keyboard
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') navSlide(1);
+  if (e.key === 'ArrowLeft') navSlide(-1);
+  if (e.key === '1') irAula(1);
+  if (e.key === '2') irAula(2);
+  if (e.key === '3') irAula(3);
+  if (e.key === '4') irAula(4);
+});
+
+// init
+irAula(1);
+</script>
+</body>
+</html>

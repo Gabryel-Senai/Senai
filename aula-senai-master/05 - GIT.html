@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&amp;family=Roboto+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-family: 'Source Sans 3', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-color: #0d1117;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 24px 40px;
+            border-bottom: 1px solid #30363d;
+            background-color: #161b22;
+        }
+        .header-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #238636;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 16px;
+            box-shadow: 0 0 10px rgba(35, 134, 54, 0.2);
+        }
+        .content-wrapper {
+            display: flex;
+            flex: 1;
+            padding: 30px 40px;
+            gap: 24px;
+            overflow: hidden;
+        }
+        .column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        /* Cards */
+        .card {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 24px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #21262d;
+            padding-bottom: 12px;
+        }
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #e6edf3;
+            margin: 0;
+        }
+        .card-icon {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        /* Checklist Items */
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 14px;
+            padding: 8px 12px;
+            background-color: rgba(13, 17, 23, 0.5);
+            border-radius: 6px;
+            border: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+        .checklist-item:hover {
+            border-color: #30363d;
+        }
+        .check-icon {
+            color: #3fb950;
+            margin-top: 4px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        .item-text {
+            color: #c9d1d9;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+        .item-subtext {
+            display: block;
+            color: #8b949e;
+            font-size: 0.8rem;
+            margin-top: 2px;
+        }
+
+        /* Terminal for Acceptance Criteria */
+        .mini-terminal {
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 16px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.8rem;
+            color: #e6edf3;
+            flex: 1;
+        }
+        .cmd-line {
+            display: flex;
+            margin-bottom: 4px;
+        }
+        .prompt { color: #3fb950; margin-right: 8px; }
+        .cmd { color: #e6edf3; }
+        .output { color: #8b949e; margin-bottom: 12px; display: block; }
+        .output-success { color: #3fb950; }
+
+        /* Next Steps */
+        .next-step-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border-bottom: 1px solid #21262d;
+            color: #8b949e;
+        }
+        .next-step-item:last-child {
+            border-bottom: none;
+        }
+        .next-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(56, 139, 253, 0.1);
+            color: #58a6ff;
+            border-radius: 50%;
+            margin-right: 12px;
+            font-size: 0.8rem;
+        }
+
+        .footer {
+            padding: 16px 40px;
+            border-top: 1px solid #30363d;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            color: #8b949e;
+            background-color: #0d1117;
+            font-family: 'Roboto Mono', monospace;
+        }
+        .mono-font { font-family: 'Roboto Mono', monospace; }
+        .tag {
+            background-color: rgba(110, 118, 129, 0.4);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: #e6edf3;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- Header -->
+<div class="header">
+<div class="header-icon">
+<i class="fas fa-tasks text-white"></i>
+</div>
+<div>
+<p class="text-xs text-green-400 font-bold uppercase tracking-wider mb-1 mono-font">Conclusão</p>
+<h1 class="text-2xl font-bold text-white tracking-tight">Entrega: Repositório Inicial Organizado</h1>
+</div>
+</div>
+<!-- Main Content -->
+<div class="content-wrapper">
+<!-- Column 1: Checklist -->
+<div class="column">
+<div class="card" style="border-top: 4px solid #3fb950;">
+<div class="card-header">
+<i class="fas fa-clipboard-check card-icon text-green-500"></i>
+<h2 class="card-title">Checklist de Entrega</h2>
+</div>
+<div style="overflow-y: auto;">
+<div class="checklist-item">
+<i class="fas fa-check-circle check-icon"></i>
+<div>
+<p class="item-text">Repositório Git inicializado</p>
+<span class="item-subtext">Pasta .git criada corretamente</span>
+</div>
+</div>
+<div class="checklist-item">
+<i class="fas fa-check-circle check-icon"></i>
+<div>
+<p class="item-text">Estrutura de pastas definida</p>
+<span class="item-subtext mono-font text-xs">src/, docs/, .github/</span>
+</div>
+</div>
+<div class="checklist-item">
+<i class="fas fa-check-circle check-icon"></i>
+<div>
+<p class="item-text">Arquivos de configuração base</p>
+<span class="item-subtext">README.md com documentação e .gitignore</span>
+</div>
+</div>
+<div class="checklist-item">
+<i class="fas fa-check-circle check-icon"></i>
+<div>
+<p class="item-text">Identidade configurada</p>
+<span class="item-subtext">git config user.name &amp; email</span>
+</div>
+</div>
+<div class="checklist-item">
+<i class="fas fa-check-circle check-icon"></i>
+<div>
+<p class="item-text">Commit inicial padronizado</p>
+<span class="item-subtext">Mensagem clara e descritiva</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 2: Acceptance Criteria -->
+<div class="column">
+<div class="card" style="border-top: 4px solid #a371f7;">
+<div class="card-header">
+<i class="fas fa-robot card-icon text-purple-400"></i>
+<h2 class="card-title">Critérios de Aceite</h2>
+</div>
+<p class="text-sm text-gray-400 mb-4">A validação deve ser feita via terminal, garantindo que o estado do projeto esteja limpo e o histórico iniciado.</p>
+<div class="mini-terminal">
+<!-- Command 1 -->
+<div class="cmd-line">
+<span class="prompt">~/projeto $</span>
+<span class="cmd">git status</span>
+</div>
+<span class="output">On branch main<br/><span class="output-success">nothing to commit, working tree clean</span></span>
+<!-- Command 2 -->
+<div class="cmd-line">
+<span class="prompt">~/projeto $</span>
+<span class="cmd">git log --oneline</span>
+</div>
+<span class="output"><span class="text-yellow-400">a1b2c3d</span> feat: inicializa projeto base</span>
+<!-- Command 3 -->
+<div class="cmd-line">
+<span class="prompt">~/projeto $</span>
+<span class="cmd">ls -F</span>
+</div>
+<span class="output">README.md<br/>docs/<br/>src/<br/>.gitignore</span>
+</div>
+</div>
+</div>
+<!-- Column 3: Next Steps -->
+<div class="column">
+<div class="card" style="border-top: 4px solid #58a6ff;">
+<div class="card-header">
+<i class="fas fa-share-square card-icon text-blue-400"></i>
+<h2 class="card-title">Próximos Passos</h2>
+</div>
+<div class="flex flex-col h-full justify-between">
+<div>
+<div class="next-step-item">
+<div class="next-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+<div>
+<p class="text-sm font-semibold text-gray-300">Conectar Remoto</p>
+<p class="text-xs mt-1">Vincular ao GitHub/GitLab</p>
+</div>
+</div>
+<div class="next-step-item">
+<div class="next-icon"><i class="fas fa-shield-alt"></i></div>
+<div>
+<p class="text-sm font-semibold text-gray-300">Políticas de Branch</p>
+<p class="text-xs mt-1">Definir proteção da branch main</p>
+</div>
+</div>
+<div class="next-step-item">
+<div class="next-icon"><i class="fas fa-code-branch"></i></div>
+<div>
+<p class="text-sm font-semibold text-gray-300">Fluxo de Trabalho</p>
+<p class="text-xs mt-1">Adotar Feature Branch Workflow</p>
+</div>
+</div>
+</div>
+<div class="mt-4 p-3 bg-gray-800 rounded border border-gray-700">
+<p class="text-xs text-blue-400 font-bold uppercase mb-2">Para estudar:</p>
+<p class="text-xs text-gray-400 italic">"Pesquisar sobre Git Flow vs GitHub Flow para nossa próxima discussão de arquitetura."</p>
+</div>
+</div>
+</div>
+<a href="/Senai/aula-senai-master/aulaHTML - bloco1-estrutura.html" class="ml-auto text-blue-500 hover:underline self-center">Próximo &rarr;</a>
+
+</div>
+</div>
+<!-- Footer -->
+<div class="footer">
+<div class="flex items-center text-gray-400">
+<i class="fas fa-check-double mr-2 text-green-500"></i>
+<p>Encontro 1 Finalizado</p>
+</div>
+<p>Sistema de Solicitação Interna</p>
+</div>
+</div>
+</body>
+</html>

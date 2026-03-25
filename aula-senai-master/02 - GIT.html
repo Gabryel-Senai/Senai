@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-family: 'Source Sans 3', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            position: relative;
+            background-color: #0d1117;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 30px 50px;
+            border-bottom: 1px solid #30363d;
+            background-color: #161b22;
+        }
+        .content-wrapper {
+            display: flex;
+            flex: 1;
+            padding: 40px 50px;
+            gap: 40px;
+        }
+        .left-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .right-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .card {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 24px;
+            margin-bottom: 24px;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #21262d;
+            padding-bottom: 12px;
+        }
+        .card-icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            margin-right: 12px;
+        }
+        .icon-red { background-color: rgba(248, 81, 73, 0.15); color: #f85149; border: 1px solid rgba(248, 81, 73, 0.4); }
+        .icon-green { background-color: rgba(63, 185, 80, 0.15); color: #3fb950; border: 1px solid rgba(63, 185, 80, 0.4); }
+        .icon-blue { background-color: rgba(88, 166, 255, 0.15); color: #58a6ff; border: 1px solid rgba(88, 166, 255, 0.4); }
+        .icon-purple { background-color: rgba(163, 113, 247, 0.15); color: #a371f7; border: 1px solid rgba(163, 113, 247, 0.4); }
+        
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #e6edf3;
+        }
+        .bullet-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .bullet-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            color: #8b949e;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .bullet-item:last-child {
+            margin-bottom: 0;
+        }
+        .bullet-marker {
+            margin-right: 10px;
+            margin-top: 6px;
+            font-size: 0.5rem;
+            color: #58a6ff;
+        }
+        .mono-font {
+            font-family: 'Roboto Mono', monospace;
+        }
+        .footer {
+            padding: 15px 50px;
+            border-top: 1px solid #30363d;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            color: #8b949e;
+            background-color: #0d1117;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border: 1px solid #30363d;
+            margin-left: auto;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- Header -->
+<div class="header">
+<div style="width: 40px; height: 40px; background-color: #238636; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 16px;">
+<i class="fas fa-code-branch text-white text-lg"></i>
+</div>
+<div>
+<p class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-1">Encontro 1</p>
+<h1 class="text-2xl font-bold text-white tracking-tight">Contexto do Projeto e Objetivos</h1>
+</div>
+<div class="status-badge text-gray-400 bg-gray-800 mono-font">
+                v1.0.0-init
+            </div>
+</div>
+<!-- Main Content -->
+<div class="content-wrapper">
+<!-- Left Column: Context -->
+<div class="left-column">
+<div class="card">
+<div class="card-header">
+<div class="card-icon icon-red">
+<i class="fas fa-exclamation-triangle"></i>
+</div>
+<h2 class="section-title">O Problema</h2>
+</div>
+<ul class="bullet-list">
+<li class="bullet-item">
+<i class="fas fa-circle bullet-marker text-red-400"></i>
+<p>Solicitações dispersas via e-mail, chat e corredores.</p>
+</li>
+<li class="bullet-item">
+<i class="fas fa-circle bullet-marker text-red-400"></i>
+<p>Baixa rastreabilidade de quem pediu e quando.</p>
+</li>
+<li class="bullet-item">
+<i class="fas fa-circle bullet-marker text-red-400"></i>
+<p>SLA indefinido: sem visibilidade de prazos e atrasos.</p>
+</li>
+</ul>
+</div>
+<div class="card" style="flex: 1;">
+<div class="card-header">
+<div class="card-icon icon-green">
+<i class="fas fa-check-circle"></i>
+</div>
+<h2 class="section-title">A Solução Proposta</h2>
+</div>
+<p class="text-gray-400 text-sm mb-4 leading-relaxed">Desenvolvimento de um portal interno centralizado para abertura, triagem e acompanhamento completo do ciclo de vida dos pedidos.</p>
+<ul class="bullet-list">
+<li class="bullet-item">
+<i class="fas fa-check bullet-marker text-green-400"></i>
+<p><strong class="text-white">Padronização:</strong> Formulários únicos.</p>
+</li>
+<li class="bullet-item">
+<i class="fas fa-check bullet-marker text-green-400"></i>
+<p><strong class="text-white">Transparência:</strong> Status em tempo real.</p>
+</li>
+<li class="bullet-item">
+<i class="fas fa-check bullet-marker text-green-400"></i>
+<p><strong class="text-white">Métricas:</strong> Relatórios de volume e SLA.</p>
+</li>
+</ul>
+</div>
+</div>
+<!-- Right Column: Goals -->
+<div class="right-column">
+<div class="card icon-blue" style="border-left: 4px solid #58a6ff;">
+<div class="card-header" style="border-bottom: none; padding-bottom: 0; margin-bottom: 10px;">
+<h2 class="section-title text-blue-400">Escopo do Encontro</h2>
+</div>
+<p class="text-sm text-gray-300 font-medium">Setup do ambiente local e versionamento.</p>
+</div>
+<div class="card" style="flex: 1;">
+<div class="card-header">
+<div class="card-icon icon-purple">
+<i class="fas fa-bullseye"></i>
+</div>
+<h2 class="section-title">Objetivos da Sessão</h2>
+</div>
+<div style="display: flex; flex-direction: column; gap: 15px;">
+<div style="background-color: #0d1117; padding: 12px; border-radius: 6px; border: 1px solid #30363d;">
+<p class="text-white text-sm font-semibold mb-1"><i class="fas fa-sitemap mr-2 text-purple-400"></i>Estrutura</p>
+<p class="text-gray-500 text-xs">Definir e criar a árvore de pastas inicial.</p>
+</div>
+<div style="background-color: #0d1117; padding: 12px; border-radius: 6px; border: 1px solid #30363d;">
+<p class="text-white text-sm font-semibold mb-1"><i class="fab fa-git-alt mr-2 text-purple-400"></i>Repositório</p>
+<p class="text-gray-500 text-xs">Inicializar git, configurar .gitignore e README.</p>
+</div>
+<div style="background-color: #0d1117; padding: 12px; border-radius: 6px; border: 1px solid #30363d;">
+<p class="text-white text-sm font-semibold mb-1"><i class="fas fa-save mr-2 text-purple-400"></i>Commit Inicial</p>
+<p class="text-gray-500 text-xs">Registrar o marco zero do projeto com boas práticas.</p>
+</div>
+</div>
+</div>
+<a href="/Senai/aula-senai-master/03 - GIT.html" class="ml-auto text-blue-500 hover:underline self-center">Próximo &rarr;</a>
+
+</div>
+</div>
+<!-- Footer -->
+<div class="footer mono-font">
+<p>Sistema de Solicitação Interna</p>
+<p><i class="fas fa-user-clock mr-2"></i>Tempo estimado: 15 min</p>
+</div>
+</div>
+</body>
+</html>

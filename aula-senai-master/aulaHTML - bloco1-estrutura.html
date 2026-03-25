@@ -1,0 +1,92 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+
+    
+  <style> 
+
+    label {
+      /* display: block faz o label ocupar a linha inteira,
+         empurrando o input para a linha seguinte */
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #16213e;
+      margin-top: 16px;
+      margin-bottom: 4px;
+      font-family: Arial, sans-serif;
+    }
+
+ section {
+      background-color: #ffffff;
+
+      padding: 28px 32px;
+      margin: 28px;
+
+      border: 1px solid #d1dce8;   /* borda fina ao redor da seção */
+      border-radius: 80px;          /* cantos arredondados */
+      /* sombra: deslocX deslocY desfoque cor */
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 1);
+    }
+
+  </style>
+  </head>
+<body>
+<section>
+   <form action="#" method="post">
+
+        <!-- Campo de texto simples -->
+        <label for="nome">Seu nome completo:</label>
+        <input type="text" id="nome" name="nome" placeholder="Ex.: João da Silva">
+
+        <!-- Campo de e-mail (valida formato automaticamente) -->
+        <label for="email">E-mail para contato:</label>
+        <input type="email" id="email" name="email" placeholder="Ex.: joao@empresa.com">
+
+        <!-- Menu suspenso (select) -->
+        <label for="categoria">Categoria do chamado:</label>
+        <select id="categoria" name="categoria">
+          <option value="">-- Selecione --</option>
+          <option value="suporte">Suporte técnico</option>
+          <option value="equipamento">Solicitação de equipamento</option>
+          <option value="acesso">Acesso a sistemas</option>
+          <option value="administrativo">Dúvidas administrativas</option>
+        </select>
+
+        <!-- Grupo de botões de opção (radio): apenas um pode ser marcado -->
+        <fieldset>
+          <legend>Departamento:</legend>
+          <input type="radio" id="ti" name="departamento" value="ti">
+          <label for="ti">TI</label>
+
+          <input type="radio" id="rh" name="departamento" value="rh">
+          <label for="rh">RH</label>
+
+          <input type="radio" id="financeiro" name="departamento" value="financeiro">
+          <label for="financeiro">Financeiro</label>
+        </fieldset>
+
+        <!-- Área de texto longa -->
+        <label for="descricao">Descrição detalhada:</label>
+        <textarea id="descricao" name="descricao" rows="5"
+          placeholder="Descreva o problema ou solicitação com detalhes..."></textarea>
+
+        <!-- Caixa de marcação (checkbox) -->
+        <input type="checkbox" id="aceite" name="aceite">
+        <label for="aceite">Declaro que as informações acima são verdadeiras.</label>
+
+        <!-- Botão de envio -->
+        <button type="submit">Enviar chamado</button>
+
+      </form>
+<a href="/Senai/aula-senai-master/aulaHTML - bloco2-css-basico.html" class="ml-auto text-blue-500 hover:underline self-center">Próximo &rarr;</a>
+</section>
+   
+
+  <!-- RODAPÉ -->
+  <footer>
+    <p>SENAI-SP &mdash; Sistema de Chamados Internos &copy; 2025</p>
+  </footer>
+
+</body>
+</html>

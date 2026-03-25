@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&amp;family=Roboto+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-family: 'Source Sans 3', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-color: #0d1117;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 24px 40px;
+            border-bottom: 1px solid #30363d;
+            background-color: #161b22;
+        }
+        .header-icon {
+            width: 36px;
+            height: 36px;
+            background-color: #1f6feb;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 16px;
+        }
+        .content-wrapper {
+            display: flex;
+            flex: 1;
+            padding: 30px 40px;
+            gap: 40px;
+            overflow: hidden;
+        }
+        .left-column {
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-right: 10px;
+        }
+        .right-column {
+            width: 60%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        /* Step Cards in Left Column */
+        .step-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .step-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 16px;
+            border-radius: 8px;
+            background-color: rgba(22, 27, 34, 0.5);
+            border: 1px solid #30363d;
+            transition: all 0.2s ease;
+        }
+        .step-item:hover {
+            border-color: #58a6ff;
+            background-color: rgba(22, 27, 34, 0.9);
+        }
+        .step-number {
+            width: 28px;
+            height: 28px;
+            background-color: #21262d;
+            color: #8b949e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Roboto Mono', monospace;
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-right: 16px;
+            border: 1px solid #30363d;
+            flex-shrink: 0;
+        }
+        .step-content h3 {
+            margin: 0 0 4px 0;
+            color: #e6edf3;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        .step-content p {
+            margin: 0;
+            color: #8b949e;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        .active-step .step-number {
+            background-color: #1f6feb;
+            color: white;
+            border-color: #1f6feb;
+        }
+        .active-step h3 {
+            color: #58a6ff;
+        }
+
+        /* Terminal Window in Right Column */
+        .terminal {
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            max-height: 520px;
+            overflow: hidden;
+        }
+        .terminal-header {
+            background-color: #161b22;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #30363d;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .red { background-color: #ff5f56; }
+        .yellow { background-color: #ffbd2e; }
+        .green { background-color: #27c93f; }
+        .terminal-title {
+            margin-left: 12px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.75rem;
+            color: #8b949e;
+            flex: 1;
+            text-align: center;
+            opacity: 0.7;
+        }
+        .terminal-body {
+            padding: 24px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.85rem;
+            color: #e6edf3;
+            overflow-y: auto;
+            flex: 1;
+            line-height: 1.6;
+        }
+        
+        /* Syntax Highlighting */
+        .cmd { color: #e6edf3; }
+        .prompt { color: #3fb950; margin-right: 8px; user-select: none; }
+        .path { color: #58a6ff; }
+        .comment { color: #8b949e; font-style: italic; display: block; margin-top: 12px; margin-bottom: 4px; }
+        .string { color: #a5d6ff; }
+        .keyword { color: #ff7b72; }
+        .success { color: #3fb950; }
+        .branch { color: #a371f7; }
+        
+        .code-block {
+            margin-bottom: 12px;
+        }
+
+        .footer {
+            padding: 16px 40px;
+            border-top: 1px solid #30363d;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            color: #8b949e;
+            background-color: #0d1117;
+            font-family: 'Roboto Mono', monospace;
+        }
+        .mono-font { font-family: 'Roboto Mono', monospace; }
+        
+        .folder-tree {
+            margin-left: 20px;
+            color: #8b949e;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- Header -->
+<div class="header">
+<div class="header-icon">
+<i class="fas fa-terminal text-white"></i>
+</div>
+<div>
+<p class="text-xs text-blue-400 font-bold uppercase tracking-wider mb-1 mono-font">Prática</p>
+<h1 class="text-2xl font-bold text-white tracking-tight">Git Local: Setup e Primeiro Commit</h1>
+</div>
+</div>
+<!-- Main Content -->
+<div class="content-wrapper">
+<!-- Left Column: Steps -->
+<div class="left-column">
+<div class="step-list">
+<div class="step-item">
+<div class="step-number">1</div>
+<div class="step-content">
+<h3>Configuração Inicial</h3>
+<p>Defina sua identidade (nome e e-mail) para que seus commits sejam autorados corretamente no histórico.</p>
+</div>
+</div>
+<div class="step-item">
+<div class="step-number">2</div>
+<div class="step-content">
+<h3>Inicializar Repositório</h3>
+<p>Crie a pasta do projeto e o subdiretório oculto <code>.git</code> que rastreará todas as mudanças.</p>
+</div>
+</div>
+<div class="step-item">
+<div class="step-number">3</div>
+<div class="step-content">
+<h3>Ciclo de Vida Básico</h3>
+<p>Verifique o status, adicione arquivos à <em>staging area</em> e consolide com o commit.</p>
+</div>
+</div>
+<div class="step-item active-step" style="border-left: 4px solid #58a6ff;">
+<div class="step-number">4</div>
+<div class="step-content">
+<h3>Primeiro Commit Estruturado</h3>
+<p>Use o padrão <strong>Conventional Commits</strong> para mensagens claras e rastreáveis desde o início.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Terminal -->
+<div class="right-column">
+<div class="terminal">
+<div class="terminal-header">
+<div class="dot red"></div>
+<div class="dot yellow"></div>
+<div class="dot green"></div>
+<div class="terminal-title">bash — 80x24</div>
+</div>
+<div class="terminal-body">
+<!-- Step 1 -->
+<span class="comment"># 1. Configurar identidade global</span>
+<div class="code-block">
+<span class="prompt">$</span><span class="cmd">git config --global user.name "Dev Responsável"</span><br/>
+<span class="prompt">$</span><span class="cmd">git config --global user.email "dev@empresa.com"</span>
+</div>
+<!-- Step 2 -->
+<span class="comment"># 2. Criar pasta e iniciar git</span>
+<div class="code-block">
+<span class="prompt">$</span><span class="cmd">mkdir sistema-solicitacao &amp;&amp; cd sistema-solicitacao</span><br/>
+<span class="prompt">~/sistema-solicitacao $</span><span class="cmd">git init</span><br/>
+<span class="text-gray-500">Initialized empty Git repository in .../.git/</span>
+</div>
+<!-- Step 3 -->
+<span class="comment"># 3. Criar estrutura base e verificar</span>
+<div class="code-block">
+<span class="prompt">~/sistema-solicitacao <span class="branch">(main)</span> $</span><span class="cmd">touch README.md .gitignore</span><br/>
+<span class="prompt">~/sistema-solicitacao <span class="branch">(main)</span> $</span><span class="cmd">mkdir src docs .github</span><br/>
+<span class="prompt">~/sistema-solicitacao <span class="branch">(main)</span> $</span><span class="cmd">git status</span><br/>
+<span class="text-red-400">Untracked files: .gitignore, README.md, docs/, src/</span>
+</div>
+<!-- Step 4 -->
+<span class="comment"># 4. Adicionar tudo e realizar commit estruturado</span>
+<div class="code-block">
+<span class="prompt">~/sistema-solicitacao <span class="branch">(main)</span> $</span><span class="cmd">git add .</span><br/>
+<span class="prompt">~/sistema-solicitacao <span class="branch">(main)</span> $</span><span class="cmd">git commit -m "feat: inicializa estrutura do projeto"</span><br/>
+<div class="border-l-2 border-gray-600 pl-3 mt-1 text-gray-400 text-xs">
+<p>[main (root-commit) a1b2c3d] feat: inicializa estrutura do projeto</p>
+<p> 4 files changed, 12 insertions(+)</p>
+</div>
+</div>
+</div>
+</div>
+<a href="/Senai/aula-senai-master/05 - GIT.html" class="ml-auto text-blue-500 hover:underline self-center">Próximo &rarr;</a>
+</div>
+</div>
+<!-- Footer -->
+<div class="footer">
+<div class="flex items-center text-gray-400">
+<i class="fas fa-info-circle mr-2"></i>
+<p>Use "git log --oneline" para verificar o histórico após o commit.</p>
+</div>
+<p>Sessão Técnica 1 / 5</p>
+</div>
+</div>
+</body>
+</html>

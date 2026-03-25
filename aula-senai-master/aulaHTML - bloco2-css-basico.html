@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Bloco 2 – Introdução ao CSS</title>
+
+  <style>
+    /* =============================================
+       BLOCO 2 — INTRODUÇÃO AO CSS
+       Conceitos: seletores, cores, tipografia,
+       espaçamento (box model), bordas, fundo.
+       Sem flexbox. Layout em bloco (block/inline).
+       ============================================= */
+
+    /* ------------------------------------------
+       1. SELETOR DE ELEMENTO
+       Aplica estilo a TODAS as tags desse tipo.
+       ------------------------------------------ */
+    body {
+      /* font-family: pilha de fontes (a primeira disponível vence) */
+      font-family: Georgia, "Times New Roman", serif;
+
+      /* background-color: cor de fundo da página inteira */
+      background-color: #f0f4f8;
+
+      /* color: cor padrão do texto */
+      color: #1a1a2e;
+
+      /* margin: espaço FORA do elemento (aqui zera o padrão do navegador) */
+      margin: 0;
+
+      /* padding: espaço DENTRO do elemento */
+      padding: 0;
+    }
+
+    /* ------------------------------------------
+       2. TIPOGRAFIA — tamanho, peso, cor, espaçamento
+       ------------------------------------------ */
+    h1 {
+      font-size: 2rem;        /* rem = relativo à fonte raiz (16px) */
+      font-weight: 700;       /* negrito */
+      color: #16213e;
+      letter-spacing: 1px;   /* espaço entre letras */
+      margin-bottom: 4px;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #0f3460;
+      border-bottom: 2px solid #0f3460;  /* linha decorativa abaixo */
+      padding-bottom: 6px;
+      margin-bottom: 16px;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      color: #16213e;
+      margin-top: 20px;
+    }
+
+    p {
+      line-height: 1.7;      /* altura da linha — melhora leitura */
+      margin-bottom: 12px;
+    }
+
+    /* ------------------------------------------
+       3. BOX MODEL — margin, padding, border, width
+       Cada elemento é uma caixa com 4 camadas:
+         content → padding → border → margin
+       ------------------------------------------ */
+    header {
+      background-color: #16213e;
+      color: #e0e0e0;
+      padding: 24px 32px;    /* 24px em cima/baixo, 32px nas laterais */
+      margin-bottom: 0;
+    }
+
+    header p {
+      color: #a0aec0;
+      font-size: 0.95rem;
+      margin: 0;
+    }
+
+    /* ------------------------------------------
+       4. SELETOR DE ELEMENTO: <nav>
+       ------------------------------------------ */
+    nav {
+      background-color: #0f3460;
+      padding: 12px 32px;
+    }
+
+    /* Seletor descendente: <a> dentro de <nav> */
+    nav a {
+      color: #e0e0e0;
+      text-decoration: none;       /* remove sublinhado padrão */
+      font-size: 0.9rem;
+      margin-right: 24px;          /* espaço entre os links */
+      font-family: Arial, sans-serif;
+      letter-spacing: 0.5px;
+    }
+
+    /* Pseudo-classe: estado quando o mouse passa por cima */
+    nav a:hover {
+      color: #e94560;
+      text-decoration: underline;
+    }
+
+    /* ------------------------------------------
+       5. MAIN E SECTION — estrutura de blocos
+       ------------------------------------------ */
+    main {
+      /* width + margin auto: centraliza o bloco horizontalmente */
+      width: 860px;
+      margin: 32px auto;           /* 32px cima/baixo, automático nas laterais */
+    }
+
+    section {
+      background-color: #ffffff;
+      border: 1px solid #d1dce8;   /* borda fina ao redor da seção */
+      border-radius: 8px;          /* cantos arredondados */
+      padding: 28px 32px;
+      margin-bottom: 28px;
+
+      /* sombra: deslocX deslocY desfoque cor */
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    /* ------------------------------------------
+       6. LISTAS — espaçamento e marcadores
+       ------------------------------------------ */
+    ul, ol {
+      padding-left: 24px;
+      margin-bottom: 16px;
+    }
+
+    ul li, ol li {
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+
+    ul {
+      list-style-type: disc;       /* marcador padrão: ponto cheio */
+    }
+
+    ol {
+      list-style-type: decimal;    /* marcador: número */
+    }
+
+    /* ------------------------------------------
+       7. FORMULÁRIO — campos e rótulos em bloco
+       ------------------------------------------ */
+    label {
+      /* display: block faz o label ocupar a linha inteira,
+         empurrando o input para a linha seguinte */
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #16213e;
+      margin-top: 16px;
+      margin-bottom: 4px;
+      font-family: Arial, sans-serif;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    select,
+    textarea {
+      /* display: block + width: 100% faz o campo ocupar toda a largura */
+      display: block;
+      width: 100%;
+
+      /* box-sizing: border-box inclui padding e borda no cálculo da width */
+      box-sizing: border-box;
+
+      padding: 10px 12px;
+      border: 1px solid #b0c4d8;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      color: #1a1a2e;
+      background-color: #f7fafd;
+    }
+
+    /* Pseudo-classe :focus — quando o campo está ativo */
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;                      /* remove o contorno padrão */
+      border-color: #0f3460;
+      background-color: #ffffff;
+      box-shadow: 0 0 0 3px rgba(15, 52, 96, 0.12);
+    }
+
+    textarea {
+      resize: vertical;  /* permite redimensionar apenas na vertical */
+    }
+
+    /* ------------------------------------------
+       8. FIELDSET E RADIO BUTTONS
+       ------------------------------------------ */
+    fieldset {
+      border: 1px solid #b0c4d8;
+      border-radius: 6px;
+      padding: 12px 16px;
+      margin-top: 16px;
+    }
+
+    legend {
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: #16213e;
+      padding: 0 6px;
+    }
+
+    /* Radio: inline-block mantém na mesma linha */
+    input[type="radio"] {
+      margin-right: 4px;
+      margin-left: 12px;
+      cursor: pointer;
+    }
+
+    input[type="radio"]:first-of-type {
+      margin-left: 0;
+    }
+
+    /* ------------------------------------------
+       9. CHECKBOX
+       ------------------------------------------ */
+    input[type="checkbox"] {
+      margin-top: 16px;
+      margin-right: 6px;
+      cursor: pointer;
+      transform: scale(1.2);
+    }
+
+    /* Seletor de irmão adjacente (+) */
+    input[type="checkbox"] + label {
+      display: inline;             /* mantém o label na mesma linha do checkbox */
+      font-weight: 400;
+      font-size: 0.875rem;
+    }
+
+    /* ------------------------------------------
+       10. BOTÃO
+       ------------------------------------------ */
+    button[type="submit"] {
+      display: block;
+      margin-top: 24px;
+      padding: 12px 32px;
+      background-color: #e94560;
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: Arial, sans-serif;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #c73652;
+    }
+
+    /* ------------------------------------------
+       11. RODAPÉ
+       ------------------------------------------ */
+    footer {
+      background-color: #16213e;
+      color: #718096;
+      text-align: center;
+      padding: 20px 32px;
+      font-size: 0.85rem;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Sistema de Chamados</h1>
+    <p>Portal de abertura de solicitações internas</p>
+  </header>
+
+  <nav>
+    <a href="#">Início</a>
+    <a href="#">Meus Chamados</a>
+    <a href="#">Novo Chamado</a>
+    <a href="#">Sair</a>
+  </nav>
+
+  <main>
+
+    <section>
+      <h2>O que é um chamado?</h2>
+      <p>
+        Um <strong>chamado</strong> é uma solicitação formal registrada
+        no sistema para reportar um problema, pedir um serviço ou tirar
+        uma dúvida. Cada chamado recebe um número único e é
+        acompanhado até a sua resolução.
+      </p>
+
+      <h3>Tipos de chamado disponíveis:</h3>
+      <ul>
+        <li>Suporte técnico</li>
+        <li>Solicitação de equipamento</li>
+        <li>Acesso a sistemas</li>
+        <li>Dúvidas administrativas</li>
+      </ul>
+
+      <h3>Como funciona o processo?</h3>
+      <ol>
+        <li>Você abre o chamado preenchendo o formulário</li>
+        <li>O sistema gera um número de protocolo</li>
+        <li>Um técnico é designado para o atendimento</li>
+        <li>Você recebe atualizações por e-mail</li>
+        <li>O chamado é encerrado após a resolução</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Abrir Novo Chamado</h2>
+
+      <form action="#" method="post">
+
+        <label for="nome">Seu nome completo:</label>
+        <input type="text" id="nome" name="nome" placeholder="Ex.: João da Silva">
+
+        <label for="email">E-mail para contato:</label>
+        <input type="email" id="email" name="email" placeholder="Ex.: joao@empresa.com">
+
+        <label for="categoria">Categoria do chamado:</label>
+        <select id="categoria" name="categoria">
+          <option value="">-- Selecione --</option>
+          <option value="suporte">Suporte técnico</option>
+          <option value="equipamento">Solicitação de equipamento</option>
+          <option value="acesso">Acesso a sistemas</option>
+          <option value="administrativo">Dúvidas administrativas</option>
+        </select>
+
+        <fieldset>
+          <legend>Departamento:</legend>
+          <input type="radio" id="ti" name="departamento" value="ti">
+          <label for="ti">TI</label>
+
+          <input type="radio" id="rh" name="departamento" value="rh">
+          <label for="rh">RH</label>
+
+          <input type="radio" id="financeiro" name="departamento" value="financeiro">
+          <label for="financeiro">Financeiro</label>
+        </fieldset>
+
+        <label for="descricao">Descrição detalhada:</label>
+        <textarea id="descricao" name="descricao" rows="5"
+          placeholder="Descreva o problema ou solicitação com detalhes..."></textarea>
+
+        <input type="checkbox" id="aceite" name="aceite">
+        <label for="aceite">Declaro que as informações acima são verdadeiras.</label>
+
+        <button type="submit">Enviar chamado</button></a>
+
+      </form>
+    </section>
+    <a href="/Senai/aula-senai-master/aulas-requisitos-iniciante.html" class="ml-auto text-blue-500 hover:underline self-center">Próximo &rarr;</a>
+  </main>
+
+  <footer>
+    <p>SENAI-SP &mdash; Sistema de Chamados Internos &copy; 2025</p>
+  </footer>
+
+</body>
+</html>
