@@ -1,30 +1,3 @@
-/* CSS para o Preloader */
-.preloader {
-	position: fixed;
-	top: 0;
-	left: 0;
-	animation: spinz 1.35s linear infinite;
-	width: 100%;
-	height: 100%;
-	/* Cor de fundo do preloader */
-	background-color: #110f0f;       /* Definir fundo preloader */
-	z-index: 100;
-  }
-  
-  .loader {
-	border: 16px solid #efeee8;
-	border-top: 16px solid #8eacec;  /* Definir cor do preloader */
-	border-radius: 50%;
-	width: 120px;
-	height: 120px;
-	animation: spin 1.35s linear infinite;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	margin-top: -60px;
-	margin-left: -60px;
-  }
-/* Funções de animação */
   @keyframes spin {
 	0% {
 	  transform: rotate(0deg);
@@ -58,3 +31,130 @@
 	  opacity:0;
 	}
   }
+/* CSS para o Preloader */
+.preloader {
+	position: fixed;
+	top: 0;
+	left: 0;
+	animation: spinz 1.35s linear infinite;
+	width: 100%;
+	height: 100%;
+	/* Cor de fundo do preloader */
+	background-color: #110f0f;       /* Definir fundo preloader */
+	z-index: 100;
+  }
+  
+  .loader {
+	border: 16px solid #efeee8;
+	border-top: 16px solid #8eacec;  /* Definir cor do preloader */
+	border-radius: 50%;
+	width: 120px;
+	height: 120px;
+	animation: spin 1.35s linear infinite;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -60px;
+	margin-left: -60px;
+  }
+/* Funções de animação */
+  footer {
+    width: 100%;
+    background-color: #222;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    margin: 10px 0 0 0;
+}
+
+/* container principal */
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 30px;
+}
+
+/* caixas */
+.footer-box {
+    flex: 1;
+    min-width: 250px;
+}
+
+/* títulos */
+.footer-box h3 {
+    margin-bottom: 15px;
+    border-left: 4px solid #ff6600;
+    padding-left: 10px;
+}
+
+/* mapa */
+.footer-box iframe {
+    width: 100%;
+    height: 200px;
+    border: 0;
+    border-radius: 10px;
+}
+
+/* textos */
+.footer-box p {
+    margin: 8px 0;
+    font-size: 0.9rem;
+}
+
+/* redes sociais */
+.social {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.contato {
+    color: #ccc;
+    text-decoration: none;
+    transition: 0.3s;
+}
+.social a {
+    color: #ccc;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.social a:hover {
+    color: #ff6600;
+}
+
+/* botão */
+.btn-maps {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #ff6600;
+    color: #fff;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.btn-maps:hover {
+    background-color: #e65c00;
+}
+
+/* parte inferior */
+.footer-bottom {
+    text-align: center;
+    padding: 15px;
+    background-color: #111;
+    font-size: 0.8rem;
+}
+  /* RESPONSIVO */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-box h3 {
+        border: none;
+        padding: 0;
+    }
+}
