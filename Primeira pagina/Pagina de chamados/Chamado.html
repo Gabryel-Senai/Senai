@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abrir chamados</title>
     <link rel="stylesheet" href="style.css">
-    <title>Login e Registro</title>
 </head>
 <body>
     <div class="preloader" id="preloader">
@@ -16,57 +16,47 @@
             <a href="">Sistema de chamados Senai</a>
             <div class="menu">
                 <a class="" href="/Primeira pagina/index.html">Home</a>
-                <a class="" href="/Sobre/Sobre.html">Sobre</a>
-                <a class="" href="/Pagina de chamados/Chamado.html">Abrir chamados</a>
-                <a class="" href="/Pagina de Login/Login-register.html">Login/Register</a>
+                <a class="" href="/Primeira pagina/Sobre/Sobre.html">Sobre</a>
+                <a class="" href="/Primeira pagina/Pagina de chamados/Chamado.html">Abrir chamados</a>
+                <a class="" href="/Primeira pagina/Pagina de Login/Login-register.html">Login/Register</a>
             </div>
         </nav>
     </div>
     </header>
-    <div class="container">
-        <!-- Login -->
-        <div class="form-section active" id="login">
-            <h2>Login</h2>
-            <form>
-                <div class="form-group">
-                    <label for="login-email">Email</label>
-                    <input type="email" id="login-email" required>
-                </div>
-                <div class="form-group">
-                    <label for="login-password">Senha</label>
-                    <input type="password" id="login-password" required>
-                </div>
-                <button type="button" onclick="entrar()">Entrar</button>
+    <nav>
+        <div>
+            <fieldset>
+            <form action="">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome"><br><br>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email"><br><br>
+                <label for="assunto">Assunto:</label>
+                <input type="text" id="assunto" name="assunto"><br><br>
+                <label for="descricao">Descrição do problema:</label><br>
+                <textarea id="descricao" name="descricao" rows="4" cols="50"></textarea><br><br>
+               
+                <legend>Departamento</legend>
+                <select name="Departamento" id="Departamento">
+                    <option value="suporte">TI</option>
+                    <option value="desenvolvimento">Financiero</option>
+                    <option value="infraestrutura">Opera</option>
+                    <option value="infraestrutura">Jurídico</option>
+                    <option value="infraestrutura">Recursos Humanos</option>
+                    <option value="infraestrutura">Marketing</option>
+                    <option value="infraestrutura">Vendas</option>
+                    <option value="infraestrutura">Logística</option>
+                </select>
+             
             </form>
-            <div class="toggle-link">
-                Não tem conta? <a onclick="toggleForms()">Registre-se</a>
-            </div>
-        </div>
+            <br>
+            <br>
 
-        <!-- Registro -->
-        <div class="form-section" id="registro">
-            <h2>Registro</h2>
-            <form>
-                <div class="form-group">
-                    <label for="reg-name">Nome</label>
-                    <input type="text" id="reg-name" required>
-                </div>
-                <div class="form-group">
-                    <label for="reg-email">Email</label>
-                    <input type="email" id="reg-email" required>
-                </div>
-                <div class="form-group">
-                    <label for="reg-password">Senha</label>
-                    <input type="password" id="reg-password" required>
-                </div>
-                <button type="button" onclick="registrar()">Registrar</button>
-            </form>
-            <div class="toggle-link">
-                Já tem conta? <a onclick="toggleForms()">Faça login</a>
-            </div>
+           <a href="/Primeira pagina/index.html" ><button>Enviar</button></a>
         </div>
-     </div>
-    </div>
+        <script src="script.js"></script>
+    </nav>
+    </fieldset>
     <footer>
         <div class="footer-container">
 
@@ -108,7 +98,5 @@
             <p>© 2026 - Todos os direitos reservados a Gabryel Jesus</p>
         </div>
     </footer>
-    
-    <script src="script.js"></script>
 </body>
 </html>
