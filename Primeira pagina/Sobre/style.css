@@ -231,3 +231,9 @@ footer {
   background-color: #111;
   font-size: 0.8rem;
 }
+
+image {
+  width: 100%;
+  height: auto;
+  margin-top: 20px;
+}
