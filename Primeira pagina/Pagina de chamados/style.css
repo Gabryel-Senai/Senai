@@ -31,6 +31,18 @@
 	  opacity:0;
 	}
   }
+  /* RESPONSIVO */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-box h3 {
+        border: none;
+        padding: 0;
+    }
+}
 /* CSS para o Preloader */
 .preloader {
 	position: fixed;
@@ -57,7 +69,51 @@
 	margin-top: -60px;
 	margin-left: -60px;
   }
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column; /* 👈 organiza em coluna */
+    align-items: center;
+    margin: 0;
+}
 /* Funções de animação */
+header {
+    width: 100%;
+    background-color: #333;
+    color: #fff;
+    padding: 1rem 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* MENU */
+.menu {
+    display: flex;
+    gap: 20px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #ddd;
+}
+
+
   footer {
     width: 100%;
     background-color: #222;
@@ -65,7 +121,6 @@
     font-family: Arial, sans-serif;
     margin: 10px 0 0 0;
 }
-
 /* container principal */
 .footer-container {
     display: flex;

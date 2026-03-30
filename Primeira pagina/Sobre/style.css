@@ -1,181 +1,233 @@
- /* CSS para el Preloader */
+/* CSS para el Preloader */
 .preloader {
-	position: fixed;
-	top: 0;
-	left: 0;
-	animation: spinz 1.35s linear infinite;
-	width: 100%;
-	height: 100%;
-	/* background-color: #ffffff; */
-	background-color: #110f0f;       /* Change the background color here */
-	z-index: 100;
-  }
-  
-  .loader {
-	border: 16px solid #efeee8;
-	border-top: 16px solid #8eacec;  /* Change the preloader color here */
-	border-radius: 50%;
-	width: 120px;
-	height: 120px;
-	animation: spin 1.35s linear infinite;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	margin-top: -60px;
-	margin-left: -60px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  animation: spinz 1.35s linear infinite;
+  width: 100%;
+  height: 100%;
+  /* background-color: #ffffff; */
+  background-color: #110f0f;
+  /* Change the background color here */
+  z-index: 100;
+}
+
+.loader {
+  border: 16px solid #efeee8;
+  border-top: 16px solid #8eacec;
+  /* Change the preloader color here */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 1.35s linear infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -60px;
+  margin-left: -60px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+    opacity: 1;
   }
 
-  @keyframes spin {
-	0% {
-	  transform: rotate(0deg);
-	  opacity:1;
-	}
-	50% {
-	  transform: rotate(360deg);
-	  opacity:1;
-	}
-	75% {
-	  opacity:1;
-	  transform: rotate(180deg);
-	}
-	100% {
-	  transform: rotate(0deg);
-	  opacity:0;
-	}
+  50% {
+    transform: rotate(360deg);
+    opacity: 1;
   }
-  
-  @keyframes spinz {
-	0% {
-	  opacity:1;
-	}
-	50% {
-	  opacity:1;
-	}
-	75% {
-	  opacity:1;
-	}
-	100% {
-	  opacity:0;
-	}
+
+  75% {
+    opacity: 1;
+    transform: rotate(180deg);
   }
- body{
-        background-color: black;
-    }
-   h1{
-    color: white;
-   }
-   h2{
-    color: white;
-   }
-   p{
-    color: white;
-   }
-   a{
-    /*Configuraçoes para link, remove o sublinhado padrão*/
-    color: rgb(255, 72, 0);
-    text-decoration: chocolate;
+
+  100% {
+    transform: rotate(0deg);
+    opacity: 0;
+  }
 }
-a:visited{
-    /*cor para link que foi acessado*/
-    color: rgba(0, 174, 255);
+
+@keyframes spinz {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  75% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
 }
-a:hover{
-    /* =Cor para link quando um usuario passar o mouse sobre ele */
-    color: pink;
-    text-decoration: underline;
+
+body {
+  background-color: black;
 }
-a{
-    color: white;
-}
-span{
-    color: white;
-}
-/* Funções de animação */
-  footer {
+header {
     width: 100%;
-    background-color: #222;
+    background-color: #333;
     color: #fff;
-    font-family: Arial, sans-serif;
-    margin: 10px 0 0 0;
+    padding: 1rem 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* MENU */
+.menu {
+    display: flex;
+    gap: 20px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #ddd;
+}
+
+h1 {
+  color: white;
+}
+
+h2 {
+  color: white;
+}
+
+p {
+  color: white;
+}
+
+a {
+  /*Configuraçoes para link, remove o sublinhado padrão*/
+  color: rgb(255, 72, 0);
+  text-decoration: chocolate;
+}
+
+a:visited {
+  /*cor para link que foi acessado*/
+  color: rgba(0, 174, 255);
+}
+
+a:hover {
+  /* =Cor para link quando um usuario passar o mouse sobre ele */
+  color: pink;
+  text-decoration: underline;
+}
+
+a {
+  color: white;
+}
+
+span {
+  color: white;
+}
+
+/* Funções de animação */
+footer {
+  width: 100%;
+  background-color: #222;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  margin: 10px 0 0 0;
 }
 
 /* container principal */
 .footer-container {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding: 30px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 30px;
 }
 
 /* caixas */
 .footer-box {
-    flex: 1;
-    min-width: 250px;
+  flex: 1;
+  min-width: 250px;
 }
 
 /* títulos */
 .footer-box h3 {
-    margin-bottom: 15px;
-    border-left: 4px solid #ff6600;
-    padding-left: 10px;
+  margin-bottom: 15px;
+  border-left: 4px solid #ff6600;
+  padding-left: 10px;
 }
 
 /* mapa */
 .footer-box iframe {
-    width: 100%;
-    height: 200px;
-    border: 0;
-    border-radius: 10px;
+  width: 100%;
+  height: 200px;
+  border: 0;
+  border-radius: 10px;
 }
 
 /* textos */
 .footer-box p {
-    margin: 8px 0;
-    font-size: 0.9rem;
+  margin: 8px 0;
+  font-size: 0.9rem;
 }
 
 /* redes sociais */
 .social {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
+
 .contato {
-    color: #ccc;
-    text-decoration: none;
-    transition: 0.3s;
+  color: #ccc;
+  text-decoration: none;
+  transition: 0.3s;
 }
+
 .social a {
-    color: #ccc;
-    text-decoration: none;
-    transition: 0.3s;
+  color: #ccc;
+  text-decoration: none;
+  transition: 0.3s;
 }
 
 .social a:hover {
-    color: #ff6600;
+  color: #ff6600;
 }
 
 /* botão */
 .btn-maps {
-    display: inline-block;
-    margin-top: 15px;
-    padding: 10px;
-    background-color: #ff6600;
-    color: #fff;
-    border-radius: 6px;
-    text-decoration: none;
-    transition: 0.3s;
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #ff6600;
+  color: #fff;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: 0.3s;
 }
 
 .btn-maps:hover {
-    background-color: #e65c00;
+  background-color: #e65c00;
 }
 
 /* parte inferior */
 .footer-bottom {
-    text-align: center;
-    padding: 15px;
-    background-color: #111;
-    font-size: 0.8rem;
+  text-align: center;
+  padding: 15px;
+  background-color: #111;
+  font-size: 0.8rem;
 }
