@@ -102,12 +102,6 @@ nav {
     align-items: center;
 }
 
-/* MENU */
-.menu {
-    display: flex;
-    gap: 20px;
-}
-
 nav a {
     color: #fff;
     text-decoration: none;
@@ -117,6 +111,20 @@ nav a {
 nav a:hover {
     color: #ddd;
 }
+
+/* MENU */
+menu {
+    display: flex;
+    gap: 1300px;
+    margin-right: -160px;
+}
+
+.menu a {
+    background-color: #b65454;
+    padding: 8px 20px;
+    border-radius: 20px;
+}
+
 
 /* CONTAINER (LOGIN CENTRALIZADO) */
 .container {
@@ -217,12 +225,21 @@ footer {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 10px;
-    padding: 30px;
+    gap: 5px;
+    padding: 10px;
 }
-
+.footer-container .text{
+    font-size: 1.7rem;
+    color: #d11c1c;
+    margin-top: 152px;
+    margin-left: -300px;
+}
 /* caixas */
 .footer-box {
+    display: flex;
+    flex-direction: column;
+    margin-left: 5rem;
+    gap: 1px;
     flex: 1;
     min-width: 250px;
 }
@@ -260,13 +277,74 @@ footer {
     transition: 0.3s;
 }
 .social a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #ccc;
+    text-decoration: none;
+}
+
+.social a:hover {
+    color: #ff6600;
+}
+.contato {
+    display: flex;
+    color: #ccc;
+    text-decoration: none;
+    transition: 0.3s;
+}
+.contato:hover {
+    color: #ff6600;
+}
+.email {
+    color: #ccc;
+    text-decoration: none;
+    transition: 0.3s;
+}
+.email:hover {
+    color: #ff6600;
+}
+
+.instagram {
+    width: 25px;
+    height: 25px;
+    margin-right: 8px;
+}
+
+.logo-instagram {
+    display: flex;
+    align-items: center;
     color: #ccc;
     text-decoration: none;
     transition: 0.3s;
 }
 
-.social a:hover {
-    color: #ff6600;
+.github {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+}
+
+.logo-github {
+    display: flex;
+    align-items: center;
+    color: #ccc;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.linkedin {
+    width: 25px;
+    height: 25px;
+    margin-right: 8px;
+}
+
+.logo-linkedin {
+    display: flex;
+    align-items: center;
+    color: #ccc;
+    text-decoration: none;
+    transition: 0.3s;
 }
 
 /* botão */

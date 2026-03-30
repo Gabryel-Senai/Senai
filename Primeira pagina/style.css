@@ -80,16 +80,20 @@ header {
     background-color: #333;
     color: #fff;
     padding: 0rem 0;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    ;
 
 }
+
 nav {
     max-width: 1200px;
-    margin: 1rem;
-    padding: -1rem;
+    margin: auto;
+    padding: 1rem;
     display: flex;
-    text-align: center;
+    justify-content: space-between;
+    align-items: center;
 }
+
 
 nav ul {
     list-style: none;
@@ -145,53 +149,51 @@ nav a:hover {
     transition-duration: 0.2s;
 }
 
-nav {
-    max-width: 1200px;
-    margin: auto;
-    padding: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.logo img{
-width:120px;
-height:auto;
-margin-top:5px;
-margin-left: -150px;
-margin-right:30px;
-transition:0.3s;
+
+.logo img {
+    width: 120px;
+    height: auto;
+    margin-top: 5px;
+    margin-left: -150px;
+    margin-right: 30px;
+    transition: 0.3s;
 }
 
-.logo img:hover{
-transform:scale(1.05);
+.logo img:hover {
+    transform: scale(1.05);
 }
-.titulo{
-    flex:5;
-    text-align:left;
-    font-size:20px;
-    font-weight:600;
-    letter-spacing:1px;
+
+.titulo {
+    flex: 5;
+    text-align: left;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 1px;
 }
+
 .menu {
     display: flex;
     gap: 130px;
     margin-right: -160px;
 }
+
 .menu a {
     background-color: #b65454;
     padding: 8px 20px;
     border-radius: 20px;
 }
+
 .chamado {
     word-spacing: 0.1rem;
     text-align: center;
 }
 
 footer {
+    width: 100%;
     background-color: #222;
     color: #fff;
     font-family: Arial, sans-serif;
-    margin-top: 50px;
+    margin-top: 10px 0 0 0;
 }
 
 /* container principal */
@@ -205,6 +207,9 @@ footer {
 
 /* caixas */
 .footer-box {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
     flex: 1;
     min-width: 250px;
 }
@@ -230,27 +235,82 @@ footer {
     font-size: 0.9rem;
 }
 
-/* redes sociais */
 .social {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-}
-
-.contato {
-    color: #ccc;
-    text-decoration: none;
-    transition: 0.3s;
+    gap: 20px;
 }
 
 .social a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     color: #ccc;
     text-decoration: none;
-    transition: 0.3s;
 }
 
 .social a:hover {
     color: #ff6600;
+}
+
+.contato {
+    display: flex;
+    color: #ccc;
+    text-decoration: none;
+    transition: 0.3s;
+}
+.contato:hover {
+    color: #ff6600;
+}
+.email {
+    color: #ccc;
+    text-decoration: none;
+    transition: 0.3s;
+}
+.email:hover {
+    color: #ff6600;
+}
+
+.instagram {
+    width: 25px;
+    height: 25px;
+    margin-right: 8px;
+}
+
+.logo-instagram {
+    display: flex;
+    align-items: center;
+    color: #ccc;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.github {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+}
+
+.logo-github {
+    display: flex;
+    align-items: center;
+    color: #ccc;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.linkedin {
+    width: 25px;
+    height: 25px;
+    margin-right: 8px;
+}
+
+.logo-linkedin {
+    display: flex;
+    align-items: center;
+    color: #ccc;
+    text-decoration: none;
+    transition: 0.3s;
 }
 
 /* botão */

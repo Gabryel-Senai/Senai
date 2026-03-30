@@ -69,15 +69,11 @@
 	margin-top: -60px;
 	margin-left: -60px;
   }
-body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    min-height: 100vh;
-
-    display: flex;
-    flex-direction: column; /* 👈 organiza em coluna */
-    align-items: center;
-    margin: 0;
+  body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
 }
 /* Funções de animação */
 header {
@@ -97,12 +93,6 @@ nav {
     align-items: center;
 }
 
-/* MENU */
-.menu {
-    display: flex;
-    gap: 20px;
-}
-
 nav a {
     color: #fff;
     text-decoration: none;
@@ -112,7 +102,17 @@ nav a {
 nav a:hover {
     color: #ddd;
 }
+menu {
+    display: flex;
+    gap: 130px;
+    margin-right: -160px;
+}
 
+.menu a {
+    background-color: #b65454;
+    padding: 8px 20px;
+    border-radius: 20px;
+}
 
   footer {
     width: 100%;
