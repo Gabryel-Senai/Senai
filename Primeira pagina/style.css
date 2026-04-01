@@ -336,16 +336,3 @@ footer {
     background-color: #111;
     font-size: 0.8rem;
 }
-
-/* RESPONSIVO */
-@media (max-width: 768px) {
-    .footer-container {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .footer-box h3 {
-        border: none;
-        padding: 0;
-    }
-}
