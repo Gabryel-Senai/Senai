@@ -1,10 +1,11 @@
 body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #1e1e2f, #3a3a5f) no-repeat;
-            margin: 0;
-            padding: 10px;
+            background-image: url("https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNnVqbmFia2ExamE1cHd3YWYyOG5rMzJpcnl2Y3N3YWUzcWwwam8xcCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/fUQ4rhUZJYiQsas6WD/giphy.gif");
+            margin: 150px;
+            padding: 150px;
             color: white;
-            no-repeat: fixed;
+            background-size: 140%;
+            background-repeat: no-repeat;
         }
 
         h1 {
