@@ -1,0 +1,48 @@
+body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1e1e2f, #3a3a5f) no-repeat;
+            margin: 0;
+            padding: 10px;
+            color: white;
+            no-repeat: fixed;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .container {
+            max-width: 290px;
+            margin: auto;
+            background: #e00101;
+            color: #333;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(199, 26, 26, 0.2);
+        }
+
+        .container h2 {
+            margin-top: 0;
+        }
+        .containe {
+            border-radius: 20px;
+            background: linear-gradient(135deg, #3636a7, #dadae2);
+            padding: 20px;
+        }
+
+        #situacaoaluno {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1ee20c;
+        }
+        #nomealuno {
+            
+            width: 95px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #e47777;
+            padding-left: 15px;
+            border-radius: 10px;
+            border: 2px solid #3a3a5f;
+        }

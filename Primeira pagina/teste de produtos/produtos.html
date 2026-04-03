@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loja</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #1e1e2f, #3a3a5f);
+        margin: 0;
+        padding: 20px;
+        color: white;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: auto;
+    }
+
+    .produtos {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        list-style: none;
+        padding: 0;
+    }
+
+    .card {
+        background: #ffffff;
+        color: #333;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        transition: 0.3s;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+
+    .card h2 {
+        margin-top: 0;
+    }
+
+    .preco {
+        font-size: 18px;
+        font-weight: bold;
+        color: #d81111;
+    }
+
+    .estoque {
+        font-size: 12px;
+        color: gray;
+    }
+
+    .btn {
+        display: block;
+        margin-top: 10px;
+        padding: 10px;
+        text-align: center;
+        background: #d81111;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .btn:hover {
+        background: #a50d0d;
+    }
+    .acoes {
+    position: relative;
+}
+
+.hover-opcoes {
+    display: flex;
+    gap: 5px;
+    margin-top: 10px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: 0.3s;
+}
+
+.card:hover .hover-opcoes {
+    opacity: 1;
+    transform: translateY(0);
+}
+.carrinho {
+    background: white;
+    color: #333;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.carrinho ul {
+    list-style: none;
+    padding: 0;
+}
+
+.carrinho li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.total {
+    font-weight: bold;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+    <h1>🛒 Produtos</h1>
+    <ul class="produtos" id="listaProdutos"></ul>
+</div>
+<div class="carrinho">
+    <h2>🛒 Carrinho</h2>
+    <ul id="listaCarrinho"></ul>
+    <p id="total">Total: R$ 0</p>
+</div>
+
+<script>
+const produtos = [
+    { id: 1, nome: "Notebook", preco: 2500, descricao: "Alto desempenho", estoque: 10 },
+    { id: 2, nome: "Mouse", preco: 50, descricao: "Ergonômico", estoque: 50 },
+    { id: 3, nome: "Teclado", preco: 150, descricao: "Mecânico", estoque: 30 },
+    { id: 4, nome: "Monitor", preco: 800, descricao: "Full HD", estoque: 20 },
+    { id: 5, nome: "Fone de Ouvido", preco: 200, descricao: "Cancelamento de ruído", estoque: 40 }
+];
+
+// 🔥 carrega carrinho salvo
+let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+
+const lista = document.getElementById("listaProdutos");
+const listaCarrinho = document.getElementById("listaCarrinho");
+const totalEl = document.getElementById("total");
+
+function salvarCarrinho() {
+    localStorage.setItem("carrinho", JSON.stringify(carrinho));
+}
+
+// 🛒 render carrinho
+function renderCarrinho() {
+    listaCarrinho.innerHTML = "";
+    let total = 0;
+
+    carrinho.forEach((item, index) => {
+        total += item.preco;
+
+        const li = document.createElement("li");
+        li.innerHTML = `
+            ${item.nome} - R$ ${item.preco}
+            <button onclick="removerItem(${index})">❌</button>
+        `;
+        listaCarrinho.appendChild(li);
+    });
+
+    totalEl.innerText = "Total: R$ " + total;
+}
+
+// ❌ remover + devolver estoque
+function removerItem(index) {
+    const itemRemovido = carrinho[index];
+
+    const produto = produtos.find(p => p.id === itemRemovido.id);
+    if (produto) {
+        produto.estoque++;
+    }
+
+    carrinho.splice(index, 1);
+
+    salvarCarrinho();
+    renderCarrinho();
+    renderProdutos();
+}
+
+// 🛍️ render produtos
+function renderProdutos() {
+    lista.innerHTML = "";
+
+    produtos.forEach((produto) => {
+        const li = document.createElement("li");
+        li.classList.add("card");
+
+        li.innerHTML = `
+            <h2>${produto.nome}</h2>
+            <p>${produto.descricao}</p>
+            <p class="preco">R$ ${produto.preco}</p>
+            <p class="estoque">Estoque: ${produto.estoque}</p>
+            <button class="btn">Comprar</button>
+        `;
+
+        const btn = li.querySelector(".btn");
+
+        btn.onclick = () => {
+            if (produto.estoque > 0) {
+                produto.estoque--;
+
+                carrinho.push({
+                    id: produto.id,
+                    nome: produto.nome,
+                    preco: produto.preco
+                });
+
+                salvarCarrinho();
+                renderProdutos();
+                renderCarrinho();
+            } else {
+                alert("Produto esgotado!");
+            }
+        };
+
+        lista.appendChild(li);
+    });
+}
+
+// 🚀 iniciar
+renderProdutos();
+renderCarrinho();
+</script>
+
+</body>
+</html>
