@@ -206,6 +206,14 @@ nav a {
     -ms-transition: color 0.3s ease;
     -o-transition: color 0.3s ease;
 }
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+}
+
 
 nav a:hover {
     color: #ddd;
